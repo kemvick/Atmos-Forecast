@@ -1,0 +1,48 @@
+*,
+::after,
+::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.time-location {
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+}
+.weather-details {
+  background: var(--lineargradient2);
+  color: #fff;
+  padding: 2rem 1rem;
+}
+.temp-and-details {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  text-transform: capitalize;
+  border: 1px solid rebeccapurple;
+  padding: 0.67rem 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: -0.4px -0.4px 4px rebeccapurple;
+  width: 60%;
+  margin: auto;
+  margin-top: 2rem;
+}
+.city-name {
+  font-weight: 700;
+}
+.high-low {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 100%;
+  font-size: 0.8rem;
+}
+.weather-desc {
+  opacity: 60%;
+  font-size: 0.8rem;
+}

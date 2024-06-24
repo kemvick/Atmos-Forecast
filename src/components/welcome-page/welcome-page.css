@@ -1,0 +1,76 @@
+/* *,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+:root {
+  --transition: 0.5s ease-in-out all;
+  --borderRadius: 0.3rem;
+}
+
+.hero {
+  height: 100vh;
+  position: relative;
+  background: url('../../assets/umbrella.jpeg') center/cover no-repeat;
+}
+.hero-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: var(--borderRadius);
+  padding: 0.3rem 1.3rem;
+}
+.hero-text {
+  display: grid;
+  row-gap: 6rem;
+  color: white;
+  text-align: center;
+  font-style: normal;
+  font-weight: bold;
+}
+.name {
+  margin-top: -1.6rem;
+}
+.hero-text h1 {
+  font-size: 3rem;
+}
+.herotext-p {
+  font-size: 0.67rem;
+  font-weight: 500;
+}
+.getstarted-btn {
+  background: #fff;
+  padding: 0.4rem 1.2rem;
+  width: 50%;
+  margin: auto;
+  color: #461616;
+  border-radius: 0.3rem;
+}
+.getstarted-btn:hover {
+  background: #120737;
+  color: #fff;
+  transition: var(--transition);
+}
+.home {
+  padding: 0.2rem 1.5rem;
+  border: 1px solid red;
+}
+/* media queries */
+@media screen and (min-width: 768px) {
+  .hero-text h1 {
+    font-size: 5rem;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .hero {
+    width: 100vw;
+  }
+}
