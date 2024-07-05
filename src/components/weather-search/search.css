@@ -20,6 +20,13 @@
   background: #5936b4;
   margin-bottom: 5rem;
 }
+.back-btn {
+  cursor: pointer;
+}
+.back-btn:hover {
+  transform: scale(1.1);
+  transition: var(--transition);
+}
 .header-title {
   display: flex;
   gap: 0.5rem;
@@ -130,16 +137,18 @@
   align-items: center;
 }
 .temp {
-  font-size: 2.2rem;
+  font-size: 1.9rem;
 }
 .city {
   font-size: 0.8rem;
 }
-.high-low {
+.high-low1 {
   font-size: 0.7rem;
   opacity: 60%;
+  display: flex;
+  gap: 0.4rem;
 }
-.weather-desc {
+.weather-desc1 {
   font-size: 0.6rem;
 }
 /* 
@@ -258,5 +267,12 @@ media queries
     top: 20px;
     right: 20px;
     width: 120px;
+  }
+}
+@media screen and (min-width: 1480px) {
+  .widgets-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    border: 1px solid red;
   }
 }

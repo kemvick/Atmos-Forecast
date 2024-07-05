@@ -1,8 +1,13 @@
 import React from 'react'
 import './welcome-page.css'
 import '../../index.css'
-
+import { useNavigate } from 'react-router-dom'
 const Welcomepage = () => {
+  const navigate = useNavigate()
+
+  const goToHome = () => {
+    navigate('/home')
+  }
   return (
     <>
       <div className='hero'>
@@ -16,7 +21,9 @@ const Welcomepage = () => {
                 Convinent and easy access to accurate weather informations
               </p>
             </div>
-            <button className='getstarted-btn'>Get Started</button>
+            <button onClick={goToHome} className='getstarted-btn'>
+              Get Started
+            </button>
           </div>
         </div>
       </div>

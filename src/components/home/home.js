@@ -1,10 +1,15 @@
 import React from 'react'
-// import assets from '../../assets/home-hero.jpeg'
+import { useNavigate } from 'react-router-dom'
 import '../../index.css'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { TbCurrentLocation } from 'react-icons/tb'
 
 const Home = () => {
+  const navigate = useNavigate()
+
+  const goToSearch = () => {
+    navigate('/search')
+  }
   return (
     <>
       <section className='home'>
@@ -14,7 +19,7 @@ const Home = () => {
             <h2> Choose a search method to get weather informations</h2>
           </div>
           <div className='search-button'>
-            <button className='city-btn'>
+            <button className='city-btn' onClick={goToSearch}>
               <FaMagnifyingGlass size={18} />
               Search by city name
             </button>

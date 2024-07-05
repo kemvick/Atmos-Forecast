@@ -1,22 +1,14 @@
 import React from 'react'
-import { IoSettingsOutline } from 'react-icons/io5'
 import { FaAngleDown, FaAngleLeft } from 'react-icons/fa'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
+import { useNavigate } from 'react-router-dom'
 // assests
 import assets from '../../assets/Rectangle 1.png'
 import weathercond1 from '../../assets/Moon cloud fast wind.png'
 import weathercond2 from '../../assets/Moon cloud mid rain.png'
 import weathercond3 from '../../assets/Sun cloud mid rain.png'
 import './search.css'
-// nested component
-import TimeAndLocation from './TimeAndLocation'
 const Searchbar = () => {
-  const UnitBtn = document.querySelector('.units-btn')
-  const UnitBtnHandler = () => {
-    UnitBtn.addEventListener('click', (btn) => {
-      btn.classList.toggle('unit-list')
-    })
-  }
   // Data
   const cities = [
     {
@@ -45,16 +37,23 @@ const Searchbar = () => {
       img: weathercond1,
     },
   ]
+  const navigate = useNavigate()
+  const goBackToHome = () => {
+    navigate('/home')
+  }
+  const displayWeatherInfo = () => {
+    navigate('/forecast')
+  }
   return (
     <>
       <section className='body'>
         <section className='search-header'>
           <div className='header-title'>
-            <FaAngleLeft />
+            <FaAngleLeft onClick={goBackToHome} className='back-btn' />
             <div>Weather</div>
           </div>
           <div className='units-btn'>
-            <button>°C</button>
+            <button onClick={displayWeatherInfo}>°C</button>
             <p>|</p>
             <button>°F</button>
           </div>
@@ -90,10 +89,14 @@ const Searchbar = () => {
               <img src={city.img} alt='' className='small-moon' />
               <div className='widget-details'>
                 <h2 className='temp'>19°</h2>
-                <p className='high-low'>H-24° L-18°</p>
+                <p className='high-low1'>
+                  H-
+                  <span>24°</span>
+                  L-<span>18°</span>
+                </p>
                 <div className='city-weather-desc'>
                   <p className='city'>{city.name} </p>
-                  <p className='weather-desc'>Fast Wind</p>
+                  <p className='weather-desc1'>Fast Wind</p>
                 </div>
               </div>
             </div>

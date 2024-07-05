@@ -47,6 +47,7 @@
   font-weight: 500;
 }
 .getstarted-btn {
+  cursor: pointer;
   background: #fff;
   padding: 0.4rem 1.2rem;
   width: 50%;
@@ -59,9 +60,8 @@
   color: #fff;
   transition: var(--transition);
 }
-.home {
+.home1 {
   padding: 0.2rem 1.5rem;
-  border: 1px solid red;
 }
 /* media queries */
 @media screen and (min-width: 768px) {
