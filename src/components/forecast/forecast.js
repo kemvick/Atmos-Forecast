@@ -12,8 +12,20 @@ import TabContent from './tabContent.js'
 import HourlyForecast from './hourlyForecast.js'
 import WeeklyForecast from './WeeklyForecast.js'
 import TabBar from './tabBar.js'
+import { useNavigate } from 'react-router-dom'
+import { motion, useAnimation } from 'framer-motion'
+import { useInView } from 'react-intersection-observer'
 
 const Forecast = () => {
+  // scroll animation
+  const controls = useAnimation()
+  const [ref, inView] = useInView({ triggerOnce: true })
+
+  React.useEffect(() => {
+    if (inView) {
+      controls.start('visible')
+    }
+  }, [controls, inView])
   const weatherStatDetails = [
     {
       id: 1,
@@ -47,7 +59,10 @@ const Forecast = () => {
     { label: 'Hourly Forecast', content: <HourlyForecast /> },
     { label: 'Weekly Forecast', content: <WeeklyForecast /> },
   ]
-
+  const navigate = useNavigate()
+  const fromForecastToSearch = () => {
+    navigate('/search')
+  }
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 650) {
@@ -64,7 +79,7 @@ const Forecast = () => {
       <section className='weather-details'>
         <section className='search-header search'>
           <div className='header-title'>
-            <FaAngleLeft />
+            <FaAngleLeft onClick={fromForecastToSearch} />
             <div>AtmosForecast</div>
           </div>
           <div className='units-btn'>
@@ -88,19 +103,69 @@ const Forecast = () => {
           </button> */}
         </section>
         <div className='time-location'>
-          <p>Sunday 23rd, 2024 | Local Time: 6:30 PM</p>
+          <motion.p
+            ref={ref}
+            initial='hidden'
+            animate={controls}
+            exit={{ y: '-100%' }}
+            variants={{
+              visible: { y: '-100' },
+              hidden: { y: 0 },
+            }}
+            transition={{ duration: 0.5, delay: 0 }}
+          >
+            Sunday 23rd, 2024 | Local Time: 6:30 PM
+          </motion.p>
         </div>
         <div className='temp-and-details'>
-          <p className='city-name'>London, GB</p>
-          <img src={weathercond2} alt='rainy' className='weather-img' />
-          <h1 className='temp'>19°</h1>
-          <p className='weather-desc'>mostly clear</p>
-          <p className='high-low'>
+          <motion.p
+            initial={{ y: '-100%' }}
+            animate={{ y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0 }}
+            className='city-name'
+          >
+            London, GB
+          </motion.p>
+          <motion.img
+            inherit={{ y: '-100%', opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 0, opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0 }}
+            src={weathercond2}
+            alt='rainy'
+            className='weather-img'
+          ></motion.img>
+          <motion.h1
+            initial={{ y: '-100%' }}
+            animate={{ y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, ease: 'easeInOut', delay: 0 }}
+            className='temp'
+          >
+            19°
+          </motion.h1>
+          <motion.p
+            initial={{ x: '-100%' }}
+            animate={{ x: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0 }}
+            className='weather-desc'
+          >
+            mostly clear
+          </motion.p>
+          <motion.p
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0 }}
+            className='high-low'
+          >
             <p>
               H-<span>24°</span>
             </p>
             L-<span>18°</span>
-          </p>
+          </motion.p>
           <div className='weather-stats-container'>
             {weatherStatDetails.map(({ id, Icon, title, value }) => (
               <div key={id} className='weather-stat'>

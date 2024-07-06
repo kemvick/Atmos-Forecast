@@ -8,6 +8,8 @@ import weathercond1 from '../../assets/Moon cloud fast wind.png'
 import weathercond2 from '../../assets/Moon cloud mid rain.png'
 import weathercond3 from '../../assets/Sun cloud mid rain.png'
 import './search.css'
+import { motion } from 'framer-motion'
+
 const Searchbar = () => {
   // Data
   const cities = [
@@ -47,7 +49,7 @@ const Searchbar = () => {
   return (
     <>
       <section className='body'>
-        <section className='search-header'>
+        <motion.section exit={{ opacity: 0 }} className='search-header'>
           <div className='header-title'>
             <FaAngleLeft onClick={goBackToHome} className='back-btn' />
             <div>Weather</div>
@@ -71,20 +73,27 @@ const Searchbar = () => {
               <p>Fahreint</p>
             </div>
           </button> */}
-        </section>
+        </motion.section>
         {/* search bar */}
-        <section className='search-bar'>
+        <motion.section exit={{ opacity: 0 }} className='search-bar'>
           <input
             type='text'
             placeholder='Search city name...'
             className='input'
           />
           <FaMagnifyingGlass size={18} className='search-icon' />
-        </section>
+        </motion.section>
         {/* widgets */}
-        <section className='widgets-container'>
+        <motion.section className='widgets-container'>
           {cities.map((city) => (
-            <div key={cities.id} className='widget'>
+            <motion.div
+              inherit={{ y: '-100%', opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: '100%', opacity: 0 }}
+              transition={{ duration: 0.5, ease: 'easeInOut', delay: 0 }}
+              key={cities.id}
+              className='widget'
+            >
               <img src={assets} alt='' className='rect' />
               <img src={city.img} alt='' className='small-moon' />
               <div className='widget-details'>
@@ -99,9 +108,9 @@ const Searchbar = () => {
                   <p className='weather-desc1'>Fast Wind</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </section>
+        </motion.section>
       </section>
     </>
   )

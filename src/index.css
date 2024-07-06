@@ -49,6 +49,7 @@
 .search-method {
   display: grid;
   /* gap: 0.89rem; */
+  overflow: hidden;
 }
 .description {
   font-weight: 700;
