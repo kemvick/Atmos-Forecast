@@ -25,12 +25,12 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.4);
-  border-radius: var(--borderRadius);
+  /* border-radius: var(--borderRadius); */
   padding: 0.3rem 1.3rem;
 }
 .hero-text {
   display: grid;
-  row-gap: 6rem;
+  row-gap: 5rem;
   color: white;
   text-align: center;
   font-style: normal;
@@ -52,6 +52,7 @@
   padding: 0.4rem 1.2rem;
   width: 50%;
   margin: auto;
+  margin-bottom: 1rem;
   color: #461616;
   border-radius: 0.3rem;
 }

@@ -63,14 +63,14 @@
 }
 .city-btn {
   display: flex;
-  letter-spacing: 2px;
+  letter-spacing: 0.89px;
   align-items: center;
   gap: 1rem;
   background: #5936b4;
   color: #fff;
   border-radius: 1.7rem;
   padding: 0.6rem 0.8rem;
-  width: 90%;
+  width: 95%;
   margin: auto;
   box-shadow: -0.4px -0.4px 5px #ba94ea;
   text-align: left;
