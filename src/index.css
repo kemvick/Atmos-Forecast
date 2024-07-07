@@ -36,6 +36,7 @@
   display: grid;
   color: white;
   height: 100vh;
+  overflow: hidden;
 }
 .home h2 {
   text-align: center;
@@ -44,12 +45,13 @@
   background: url('./assets/House\ 4\ 3.png') center/cover no-repeat;
   height: 49vh;
   border-radius: var(--borderRadius);
-  box-shadow: -0.4px -0.4px 3px #b6b6b6;
+  box-shadow: -0.4px -0.4px 20px #ba94ea;
 }
 .search-method {
   display: grid;
-  /* gap: 0.89rem; */
   overflow: hidden;
+  padding-bottom: 3rem;
+  margin-top: -1rem;
 }
 .description {
   font-weight: 700;
@@ -57,17 +59,20 @@
 .search-button {
   display: grid;
   gap: 1rem;
-  margin-bottom: 0.9rem;
+  /* margin-bottom: 0.9rem; */
 }
 .city-btn {
   display: flex;
+  letter-spacing: 2px;
   align-items: center;
   gap: 1rem;
-  background: var(--lineargradient1);
+  background: #5936b4;
   color: #fff;
-  border-radius: 1.4rem;
-  padding: 0.08rem 1rem;
-  box-shadow: -0.4px -0.4px 1px #b6b6b6;
+  border-radius: 1.7rem;
+  padding: 0.6rem 0.8rem;
+  width: 90%;
+  margin: auto;
+  box-shadow: -0.4px -0.4px 5px #ba94ea;
   text-align: left;
   font-size: 0.8rem;
   font-weight: 500;
