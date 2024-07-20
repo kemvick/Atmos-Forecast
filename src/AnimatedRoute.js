@@ -29,7 +29,7 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode='wait'>
       <Routes location={location} key={location.pathname}>
         <Route exact path='/' element={<Welcomepage />}></Route>
-        <Route path='/home' element={<Home />}></Route>
+        <Route path='/home' element={<Home setQuery={setQuery} />}></Route>
         <Route
           path='/search'
           element={<Searchbar setQuery={setQuery} setUnits={setUnits} />}

@@ -4,13 +4,19 @@ import '../../index.css'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { TbCurrentLocation } from 'react-icons/tb'
 import { motion } from 'framer-motion'
-const Home = () => {
+const Home = ({ setQuery }) => {
   const navigate = useNavigate()
 
   const goToSearch = () => {
     navigate('/search')
   }
-  const goToWeatherInfo = () => {
+  const handleLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords
+        setQuery({ lat: latitude, lon: longitude })
+      })
+    }
     navigate('/forecast')
   }
   return (
@@ -52,9 +58,8 @@ const Home = () => {
               exit={{ x: '-100%' }}
               transition={{ duration: 0.5, delay: 0 }}
               className='city-btn'
-              onClick={goToWeatherInfo}
             >
-              <TbCurrentLocation size={20} />
+              <TbCurrentLocation size={20} onClick={handleLocation} />
               Current location
             </motion.button>
           </div>
