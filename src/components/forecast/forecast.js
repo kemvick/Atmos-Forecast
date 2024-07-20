@@ -7,7 +7,8 @@ import { FaThermometerEmpty } from 'react-icons/fa'
 import { FaAngleLeft } from 'react-icons/fa'
 import { FiWind } from 'react-icons/fi'
 import { BiSolidDropletHalf } from 'react-icons/bi'
-import { GiSun, GiSunrise } from 'react-icons/gi'
+import { GiSunrise, GiSunset } from 'react-icons/gi'
+import { MdOutlineCompress } from 'react-icons/md'
 import TabContent from './tabContent.js'
 import HourlyForecast from './hourlyForecast.js'
 import WeeklyForecast from './WeeklyForecast.js'
@@ -15,53 +16,102 @@ import TabBar from './tabBar.js'
 import { useNavigate } from 'react-router-dom'
 import { motion, useAnimation } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
+import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
+// import { Map } from '../map.js'
+// import getformattedWeatherData from './services/weatherServices'
 
-const Forecast = () => {
+const Forecast = ({
+  weather: {
+    formattedLocalTime,
+    name,
+    country,
+    temp,
+    feels_like,
+    temp_min,
+    temp_max,
+    humidity,
+    details,
+    sunrise,
+    sunset,
+    speed,
+    pressure,
+  },
+  data,
+  setQuery,
+  setUnits,
+}) => {
   // scroll animation
-  const controls = useAnimation()
-  const [ref, inView] = useInView({ triggerOnce: true })
+  // const controls = useAnimation()
+  // const [ref, inView] = useInView({ triggerOnce: true })
 
-  React.useEffect(() => {
-    if (inView) {
-      controls.start('visible')
-    }
-  }, [controls, inView])
+  // React.useEffect(() => {
+  //   if (inView) {
+  //     controls.start('visible')
+  //   }
+  // }, [controls, inView])
   const weatherStatDetails = [
     {
       id: 1,
       Icon: FaThermometerEmpty,
       title: 'Real feel',
-      value: '15 °C',
+      value: `${feels_like.toFixed()}°`,
     },
     {
       id: 2,
       Icon: BiSolidDropletHalf,
       title: 'Humidity',
-      value: '93%',
+      value: `${humidity.toFixed()}%`,
     },
     {
       id: 3,
       Icon: FiWind,
       title: 'Wind',
-      value: '13 km/h',
+      value: `${speed.toFixed()} km/h`,
     },
     {
       id: 4,
       Icon: GiSunrise,
       title: 'Sunrise',
-      value: '9:19 Am',
+      value: `${sunrise}`,
+    },
+    {
+      id: 5,
+      Icon: GiSunset,
+      title: 'Sunset',
+      value: `${sunset}`,
+    },
+    {
+      id: 6,
+      Icon: MdOutlineCompress,
+      title: 'Pressure',
+      value: `${pressure} Pa`,
     },
   ]
   const [activeTab, setActiveTab] = useState(0)
   const [activeTabBar, setActiveTabBar] = useState(0)
   const [showTabBar, setShowTabBar] = useState(false)
   const tabs = [
-    { label: 'Hourly Forecast', content: <HourlyForecast /> },
-    { label: 'Weekly Forecast', content: <WeeklyForecast /> },
+    {
+      label: 'Hourly Forecast',
+      content: <HourlyForecast data={data} />,
+    },
+    {
+      label: 'Daily Forecast',
+      content: <WeeklyForecast data={data} />,
+    },
   ]
   const navigate = useNavigate()
   const fromForecastToSearch = () => {
     navigate('/search')
+  }
+  // Display weather data based on current location
+  const handleLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords
+        setQuery({ lat: latitude, lon: longitude })
+      })
+    }
   }
   useEffect(() => {
     const handleScroll = () => {
@@ -83,30 +133,14 @@ const Forecast = () => {
             <div>AtmosForecast</div>
           </div>
           <div className='units-btn'>
-            <button>°C</button>
+            <button onClick={() => setUnits('metric')}>°C</button>
             <p>|</p>
-            <button>°F</button>
+            <button onClick={() => setUnits('imperial')}>°F</button>
           </div>
-          {/* <button className='settings-btn'>
-            <div className='units-logo'>
-              Units
-              <FaAngleDown
-                className='units-btn'
-                type='button'
-                onClick={UnitBtnHandler}
-              />
-            </div>
-            <div className='unit-list'>
-              <p>Celius</p>
-              <p>Fahreint</p>
-            </div>
-          </button> */}
         </section>
         <div className='time-location'>
           <motion.p
-            ref={ref}
             initial='hidden'
-            animate={controls}
             exit={{ y: '-100%' }}
             variants={{
               visible: { y: '-100' },
@@ -114,7 +148,7 @@ const Forecast = () => {
             }}
             transition={{ duration: 0.5, delay: 0 }}
           >
-            Sunday 23rd, 2024 | Local Time: 6:30 PM
+            {formattedLocalTime}
           </motion.p>
         </div>
         <div className='temp-and-details'>
@@ -125,7 +159,7 @@ const Forecast = () => {
             transition={{ duration: 0.5, delay: 0 }}
             className='city-name'
           >
-            London, GB
+            {`${name}, ${country}`}
           </motion.p>
           <motion.img
             inherit={{ y: '-100%', opacity: 0 }}
@@ -143,7 +177,7 @@ const Forecast = () => {
             transition={{ duration: 0.5, ease: 'easeInOut', delay: 0 }}
             className='temp'
           >
-            19°
+            {`${temp.toFixed()}°`}
           </motion.h1>
           <motion.p
             initial={{ x: '-100%' }}
@@ -152,7 +186,7 @@ const Forecast = () => {
             transition={{ duration: 0.5, delay: 0 }}
             className='weather-desc'
           >
-            mostly clear
+            {details}
           </motion.p>
           <motion.p
             initial={{ x: '100%' }}
@@ -162,9 +196,13 @@ const Forecast = () => {
             className='high-low'
           >
             <p>
-              H-<span>24°</span>
+              <ArrowUpward />
+              <span>{`${temp_max.toFixed()}°`}</span>
             </p>
-            L-<span>18°</span>
+            <p>
+              <ArrowDownward />
+              <span>{`${temp_min.toFixed()}°`}</span>
+            </p>
           </motion.p>
           <div className='weather-stats-container'>
             {weatherStatDetails.map(({ id, Icon, title, value }) => (
@@ -174,10 +212,6 @@ const Forecast = () => {
                 <p>{value}</p>
               </div>
             ))}
-          </div>
-          <div className='weather-map'>
-            weather map
-            <div className='map'></div>
           </div>
           {/* forecast */}
           <div className='forecast-container'>
@@ -200,16 +234,22 @@ const Forecast = () => {
               </div>
             </div>
           </div>
+          {/* map */}
+          <div className='weather-map'>
+            weather map
+            <div className='map'></div>
+          </div>
+          {/* <Map /> */}
         </div>
         {showTabBar && (
           <TabBar
             activeTabBar={activeTabBar}
             setActiveTabBar={setActiveTabBar}
+            setQuery={setQuery}
           />
         )}
       </section>
     </>
   )
 }
-
 export default Forecast

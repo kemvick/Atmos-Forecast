@@ -81,7 +81,9 @@
   margin-bottom: 1rem;
   width: 100%;
 }
+
 .input {
+  position: relative;
   border-radius: 1.2rem;
   outline: none;
   background: #17183f;
@@ -122,11 +124,11 @@
   right: 15px;
   width: 90px;
 }
-.widget-details {
+.widget-details1 {
   position: absolute;
   display: grid;
   gap: 0.3rem;
-  top: 25px;
+  top: 50px;
   left: 20px;
   color: #fff;
 }
@@ -161,8 +163,8 @@ media queries
   .small-moon {
     top: 15px;
   }
-  .widget-details {
-    top: 30px;
+  .widget-details1 {
+    top: 70px;
     /* gap: 0.7rem; */
   }
   .city-weather-desc {
@@ -202,24 +204,24 @@ media queries
     padding-bottom: 6rem;
     gap: 3rem;
   }
-  .widget-details {
+  .widget-details1 {
     top: 100px;
     left: 40px;
     gap: 1rem;
   }
   .city-weather-desc {
-    gap: 21rem;
+    gap: 19.6rem;
   }
   .city {
     font-size: 1.5rem;
   }
-  .temp {
+  .temp1 {
     font-size: 4.6rem;
   }
-  .weather-desc {
+  .weather-desc1 {
     font-size: 1rem;
   }
-  .high-low {
+  .high-low1 {
     font-size: 0.98rem;
   }
   .search-icon {
@@ -240,7 +242,7 @@ media queries
   .search-icon {
     right: 50px;
   }
-  .widget-details {
+  .widget-details1 {
     top: 50px;
     left: 30px;
     gap: 1rem;
@@ -263,6 +265,9 @@ media queries
   .search-icon {
     right: 40px;
   }
+  .rect {
+    height: 40vh;
+  }
   .small-moon {
     top: 20px;
     right: 20px;
@@ -273,6 +278,5 @@ media queries
   .widgets-container {
     grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
-    border: 1px solid red;
   }
 }

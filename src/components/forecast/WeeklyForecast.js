@@ -1,15 +1,15 @@
 import React from 'react'
 import './forecast.css'
 import sun from '../../assets/Small Sun cloud angled rain.png'
-function WeeklyForecast() {
-  const weeklyData = [1, 2, 3, 4, 5, 6, 7]
+function WeeklyForecast({ data }) {
+  // const { daily } = data
   return (
     <div className='hourly-forecast-container'>
-      {weeklyData.map((weekylyData, index) => (
+      {data.map((d, index) => (
         <div key={index} className='per-hour'>
-          <p>Wed</p>
+          <p>{d.title}</p>
           <img src={sun} alt='' />
-          <p>30°</p>
+          <p>{`${d.temp.toFixed()}°`}</p>
         </div>
       ))}
     </div>

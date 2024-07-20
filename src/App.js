@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StrictMode } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
-
 // import BottomNav from './BottomNav'
 import AnimatedRoutes from './AnimatedRoute'
 const App = () => {

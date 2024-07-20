@@ -10,6 +10,9 @@ const Home = () => {
   const goToSearch = () => {
     navigate('/search')
   }
+  const goToWeatherInfo = () => {
+    navigate('/forecast')
+  }
   return (
     <>
       <section className='home'>
@@ -49,6 +52,7 @@ const Home = () => {
               exit={{ x: '-100%' }}
               transition={{ duration: 0.5, delay: 0 }}
               className='city-btn'
+              onClick={goToWeatherInfo}
             >
               <TbCurrentLocation size={20} />
               Current location

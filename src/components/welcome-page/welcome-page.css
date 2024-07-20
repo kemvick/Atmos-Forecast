@@ -9,7 +9,17 @@
   --transition: 0.5s ease-in-out all;
   --borderRadius: 0.3rem;
 }
-
+@keyframes bounce {
+  0% {
+    transform: scale(1.1, 1.1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1.1, 1.1);
+  }
+}
 .hero {
   height: 100vh;
   position: relative;
@@ -53,8 +63,9 @@
   width: 50%;
   margin: auto;
   margin-bottom: 1rem;
-  color: #461616;
+  color: #222;
   border-radius: 0.3rem;
+  animation: bounce 1s ease-in-out infinite 1.2s;
 }
 .getstarted-btn:hover {
   background: #120737;

@@ -1,15 +1,15 @@
 import React from 'react'
 import './forecast.css'
 import moon from '../../assets/Small Moon cloud mid rain.png'
-function HourlyForecast() {
-  const hourlyData = [1, 2, 3, 4, 5, 6, 7]
+const HourlyForecast = ({ data }) => {
+  // const { hourly } = data
   return (
     <div className='hourly-forecast-container'>
-      {hourlyData.map((hourlyData, index) => (
+      {data.map((d, index) => (
         <div key={index} className='per-hour'>
-          <p>12am</p>
+          <p>{d.title}</p>
           <img src={moon} alt='' className='daily-weekly-img' />
-          <p>30°</p>
+          <p>{`${d.temp.toFixed()}°`}</p>
         </div>
       ))}
     </div>

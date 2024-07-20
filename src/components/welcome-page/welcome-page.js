@@ -57,14 +57,13 @@ const Welcomepage = () => {
                 transition={{ duration: 0.5, delay: 0 }}
                 className='herotext-p'
               >
-                Convinent and easy access to accurate weather informations
+                Convinent and easy access to accurate weather information
               </motion.p>
             </div>
             <motion.button
               initial={{ y: '100%' }}
               animate={{ scale: [1, 1.2, 1] }}
               exit={{ opacity: 0 }}
-              transition={zoomTransition}
               onClick={goToHome}
               className='getstarted-btn'
             >
