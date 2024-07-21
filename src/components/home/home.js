@@ -15,9 +15,9 @@ const Home = ({ setQuery }) => {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords
         setQuery({ lat: latitude, lon: longitude })
+        navigate('/forecast')
       })
     }
-    navigate('/forecast')
   }
   return (
     <>
@@ -58,8 +58,9 @@ const Home = ({ setQuery }) => {
               exit={{ x: '-100%' }}
               transition={{ duration: 0.5, delay: 0 }}
               className='city-btn'
+              onClick={handleLocation}
             >
-              <TbCurrentLocation size={20} onClick={handleLocation} />
+              <TbCurrentLocation size={20} />
               Current location
             </motion.button>
           </div>

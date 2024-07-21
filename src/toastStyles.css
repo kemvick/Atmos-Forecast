@@ -1,0 +1,11 @@
+.Toastify__toast--custom {
+  background: #333;
+  color: #fff;
+  border-radius: 0.3rem;
+  padding: 0.5rem;
+  font-size: 0.4rem;
+}
+
+.Toastify__progress-bar--custom {
+  background: #8a59da;
+}

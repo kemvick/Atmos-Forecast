@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion, useAnimation } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
+import { IoLocation } from 'react-icons/io5'
 // import { Map } from '../map.js'
 // import getformattedWeatherData from './services/weatherServices'
 
@@ -38,6 +39,7 @@ const Forecast = ({
   },
   data,
   setQuery,
+  units,
   setUnits,
 }) => {
   // scroll animation
@@ -66,7 +68,7 @@ const Forecast = ({
       id: 3,
       Icon: FiWind,
       title: 'Wind',
-      value: `${speed.toFixed()} km/h`,
+      value: `${speed.toFixed()} ${units === 'metric' ? 'km/h' : 'm/s'}`,
     },
     {
       id: 4,
@@ -103,15 +105,6 @@ const Forecast = ({
   const navigate = useNavigate()
   const fromForecastToSearch = () => {
     navigate('/search')
-  }
-  // Display weather data based on current location
-  const handleLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords
-        setQuery({ lat: latitude, lon: longitude })
-      })
-    }
   }
   useEffect(() => {
     const handleScroll = () => {
@@ -159,7 +152,10 @@ const Forecast = ({
             transition={{ duration: 0.5, delay: 0 }}
             className='city-name'
           >
-            {`${name}, ${country}`}
+            <div className='county_name'>
+              <IoLocation />
+              {`${name}, ${country}`}
+            </div>
           </motion.p>
           <motion.img
             inherit={{ y: '-100%', opacity: 0 }}

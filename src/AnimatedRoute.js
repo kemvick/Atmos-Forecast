@@ -7,7 +7,13 @@ import Forecast from './components/forecast/forecast'
 import getformattedWeatherData from './services/weatherServices'
 import { useState, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import './toastStyles.css'
 
+const capitalizFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
 const AnimatedRoutes = () => {
   const [query, setQuery] = useState({ q: 'london' })
   const [units, setUnits] = useState('metric')
@@ -17,7 +23,14 @@ const AnimatedRoutes = () => {
   //   daily: weather.daily,
   // }
   const getWeather = async () => {
+    const message = query.q ? query.q : 'current location'
+    toast.info(
+      `Retrieving weather information for ${capitalizFirstLetter(message)}`
+    )
     await getformattedWeatherData({ ...query, units }).then((data) => {
+      toast.success(
+        `Retrieved weather information for ${data.name}, ${data.country}`
+      )
       setWeather(data)
     })
   }
@@ -43,12 +56,18 @@ const AnimatedRoutes = () => {
                 title='3 hours forecast'
                 data={weather.daily}
                 setQuery={setQuery}
+                units={{ units }}
                 setUnits={setUnits}
               />
             }
           ></Route>
         )}
       </Routes>
+      <ToastContainer
+        autoClose={2000}
+        hideProgressBar={false}
+        theme='colored'
+      />
     </AnimatePresence>
   )
 }
