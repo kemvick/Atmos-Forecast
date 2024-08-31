@@ -17,39 +17,48 @@ const Searchbar = ({ setQuery, setUnits, weather }) => {
   const cities = [
     {
       id: 1,
+      temp: '47°',
       city_name: 'brass',
       img: weathercond1,
+      weatherDesc: 'rain',
     },
     {
       id: 2,
+      temp: `67°`,
       city_name: 'Sydney',
       img: weathercond2,
+      weatherDesc: ' rain',
     },
     {
       id: 3,
+      temp: `39°`,
       city_name: 'Tokyo',
       img: weathercond3,
+      weatherDesc: 'clear',
     },
     {
       id: 4,
+      temp: `50°`,
       city_name: 'Paris',
       img: weathercond2,
+      weatherDesc: 'snow',
     },
     {
       id: 5,
+      temp: `20°`,
       city_name: 'Toronto',
       img: weathercond1,
+      weatherDesc: 'sun',
     },
   ]
+  let scr = window.innerWidth
+  console.log(scr)
   // input field
   const [city, setCity] = useState('')
 
   const navigate = useNavigate()
   const goBackToHome = () => {
     navigate('/home')
-  }
-  const displayWeatherInfo = () => {
-    navigate('/forecast')
   }
   // useEffect(() => {
   //   setQuery({ q: cities.city_name })
@@ -67,31 +76,17 @@ const Searchbar = ({ setQuery, setUnits, weather }) => {
         <motion.section exit={{ opacity: 0 }} className='search-header'>
           <div className='header-title'>
             <FaAngleLeft onClick={goBackToHome} className='back-btn' />
-            <div>Weather</div>
+            <div>Weather Search</div>
           </div>
-          <div className='units-btn'>
+          {/* <div className='units-btn'>
             <button onClick={displayWeatherInfo}>°C</button>
             <p>|</p>
             <button>°F</button>
-          </div>
-          {/* <button className='settings-btn'>
-            <div className='units-logo'>
-              Units
-              <FaAngleDown
-                className='units-btn'
-                type='button'
-                onClick={UnitBtnHandler}
-              />
-            </div>
-            <div className='unit-list'>
-              <p>Celius</p>
-              <p>Fahreint</p>
-            </div>
-          </button> */}
+          </div>  */}
         </motion.section>
         {/* search bar */}
         <motion.section exit={{ opacity: 0 }} className='search-bar'>
-          <form onSubmit={handSearchClick}>
+          <form onSubmit={handSearchClick} className='search-frm'>
             <input
               value={city}
               onChange={(e) => setCity(e.currentTarget.value)}
@@ -129,7 +124,7 @@ const Searchbar = ({ setQuery, setUnits, weather }) => {
                 </p>
                 <div className='city-weather-desc'>
                   <p className='city'> {city.city_name}</p>
-                  <p className='weather-desc1'>wind</p>
+                  <p className='weather-desc1'>{city.weatherDesc}</p>
                 </div>
               </div>
             </motion.div>
@@ -139,5 +134,4 @@ const Searchbar = ({ setQuery, setUnits, weather }) => {
     </>
   )
 }
-
 export default Searchbar

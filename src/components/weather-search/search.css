@@ -7,6 +7,17 @@
 .body {
   background: var(--lineargradient2);
 }
+@keyframes widgetbounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 .search-header {
   position: fixed;
   z-index: 11;
@@ -81,7 +92,9 @@
   margin-bottom: 1rem;
   width: 100%;
 }
-
+.search-frm {
+  width: 100%;
+}
 .input {
   position: relative;
   border-radius: 1.2rem;
@@ -117,6 +130,7 @@
 }
 .widget {
   position: relative;
+  animation: 4s widgetbounce infinite;
 }
 .small-moon {
   position: absolute;
@@ -234,7 +248,7 @@ media queries
     gap: 3rem;
   }
   .search-header {
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 5rem;
   }
   .search-bar {
     padding: 0.8rem 2rem;
@@ -253,8 +267,8 @@ media queries
   .city {
     font-size: 1.3rem;
   }
-  .temp {
-    font-size: 3rem;
+  .temp1 {
+    font-size: 2.5rem;
   }
   .weather-desc {
     font-size: 0.8rem;
@@ -266,7 +280,7 @@ media queries
     right: 40px;
   }
   .rect {
-    height: 40vh;
+    height: 35vh;
   }
   .small-moon {
     top: 20px;
@@ -274,9 +288,44 @@ media queries
     width: 120px;
   }
 }
-@media screen and (min-width: 1480px) {
+
+@media screen and (min-width: 1366px) {
   .widgets-container {
     grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
+  }
+  /* .widget {
+    animation: widgetbounce 4s infinite;
+  } */
+  .widget-details1 {
+    top: 60px;
+    left: 30px;
+    gap: 1rem;
+  }
+  .city-weather-desc {
+    gap: 10rem;
+  }
+  .city {
+    font-size: 1.3rem;
+  }
+  .temp {
+    font-size: 3rem;
+  }
+  .weather-desc {
+    font-size: 0.8rem;
+  }
+  .high-low {
+    font-size: 0.7rem;
+  }
+  /* .search-icon {
+    right: 40px;
+  } */
+  .rect {
+    height: 40vh;
+  }
+  .small-moon {
+    top: 20px;
+    right: 50px;
+    width: 120px;
   }
 }

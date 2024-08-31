@@ -260,3 +260,11 @@ media queries
     width: 95% !important;
   }
 }
+@media screen and (min-width: 1024px) {
+  .weather-img {
+    width: 10%;
+  }
+  .temp-and-details {
+    padding: 0 5rem;
+  }
+}

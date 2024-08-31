@@ -10,18 +10,15 @@ import { AnimatePresence } from 'framer-motion'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './toastStyles.css'
+import './index.css'
 
 const capitalizFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 const AnimatedRoutes = () => {
-  const [query, setQuery] = useState({ q: 'london' })
+  const [query, setQuery] = useState({ q: 'yenagoa' })
   const [units, setUnits] = useState('metric')
   const [weather, setWeather] = useState(null)
-  // hour and daily
-  // const weatherData = {
-  //   daily: weather.daily,
-  // }
   const getWeather = async () => {
     const message = query.q ? query.q : 'current location'
     toast.info(
@@ -38,37 +35,61 @@ const AnimatedRoutes = () => {
     getWeather()
   }, [query, units])
   const location = useLocation()
+  // hour and daily
+  // const weatherData = {
+  //   hourly: weather.hourly,
+  //   daily: weather.daily,
+  // }
+  const [isLoading, setIsLoading] = useState('true')
+  const [content, setContent] = useState(null)
+  useEffect(() => {
+    setTimeout(() => {
+      setContent('content')
+      setIsLoading(false)
+    }, 3000)
+  })
   return (
-    <AnimatePresence mode='wait'>
-      <Routes location={location} key={location.pathname}>
-        <Route exact path='/' element={<Welcomepage />}></Route>
-        <Route path='/home' element={<Home setQuery={setQuery} />}></Route>
-        <Route
-          path='/search'
-          element={<Searchbar setQuery={setQuery} setUnits={setUnits} />}
-        ></Route>
-        {weather && (
-          <Route
-            path='/forecast'
-            element={
-              <Forecast
-                weather={weather}
-                title='3 hours forecast'
-                data={weather.daily}
-                setQuery={setQuery}
-                units={{ units }}
-                setUnits={setUnits}
-              />
-            }
-          ></Route>
-        )}
-      </Routes>
-      <ToastContainer
-        autoClose={2000}
-        hideProgressBar={false}
-        theme='colored'
-      />
-    </AnimatePresence>
+    <>
+      {isLoading ? (
+        <div className='spinner-container'>
+          <div className='loading'>
+            <div className='loading-spinner'></div>
+            <p>loading..</p>
+          </div>
+        </div>
+      ) : (
+        <AnimatePresence mode='wait'>
+          <Routes location={location} key={location.pathname}>
+            <Route exact path='/' element={<Welcomepage />}></Route>
+            <Route path='/home' element={<Home setQuery={setQuery} />}></Route>
+            <Route
+              path='/search'
+              element={<Searchbar setQuery={setQuery} setUnits={setUnits} />}
+            ></Route>
+            {weather && (
+              <Route
+                path='/forecast'
+                element={
+                  <Forecast
+                    weather={weather}
+                    title='3 hours forecast'
+                    data={weather.hourly}
+                    setQuery={setQuery}
+                    units={{ units }}
+                    setUnits={setUnits}
+                  />
+                }
+              ></Route>
+            )}
+            {/* <ToastContainer
+          autoClose={2000}
+          hideProgressBar={false}
+          theme='colored'
+        /> */}
+          </Routes>
+        </AnimatePresence>
+      )}
+    </>
   )
 }
 

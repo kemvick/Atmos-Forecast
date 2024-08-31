@@ -15,7 +15,7 @@ import WeeklyForecast from './WeeklyForecast.js'
 import TabBar from './tabBar.js'
 import { useNavigate } from 'react-router-dom'
 import { motion, useAnimation } from 'framer-motion'
-import { useInView } from 'react-intersection-observer'
+
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
 import { IoLocation } from 'react-icons/io5'
 // import { Map } from '../map.js'
@@ -68,7 +68,7 @@ const Forecast = ({
       id: 3,
       Icon: FiWind,
       title: 'Wind',
-      value: `${speed.toFixed()} ${units === 'metric' ? 'km/h' : 'm/s'}`,
+      value: `${speed.toFixed()} ${units === 'im' ? 'km/h' : 'm/s'}`,
     },
     {
       id: 4,
