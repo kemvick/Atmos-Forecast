@@ -56,7 +56,7 @@ const Forecast = ({
       id: 1,
       Icon: FaThermometerEmpty,
       title: 'Real feel',
-      value: `${feels_like.toFixed()}°`,
+      value: `${feels_like.toFixed()}° ${units === 'metric' ? 'C' : 'F'}`,
     },
     {
       id: 2,
@@ -68,7 +68,7 @@ const Forecast = ({
       id: 3,
       Icon: FiWind,
       title: 'Wind',
-      value: `${speed.toFixed()} ${units === 'im' ? 'km/h' : 'm/s'}`,
+      value: `${speed.toFixed()} ${units === 'metric' ? 'km/h' : 'm/s'}`,
     },
     {
       id: 4,
@@ -95,11 +95,11 @@ const Forecast = ({
   const tabs = [
     {
       label: 'Hourly Forecast',
-      content: <HourlyForecast data={data} />,
+      content: <HourlyForecast data={data} units={units} />,
     },
     {
       label: 'Daily Forecast',
-      content: <WeeklyForecast data={data} />,
+      content: <WeeklyForecast data={data} units={units} />,
     },
   ]
   const navigate = useNavigate()
@@ -119,6 +119,7 @@ const Forecast = ({
   }, [])
   return (
     <>
+      <div className='forecast-page'></div>
       <section className='weather-details'>
         <section className='search-header search'>
           <div className='header-title'>
@@ -140,6 +141,7 @@ const Forecast = ({
               hidden: { y: 0 },
             }}
             transition={{ duration: 0.5, delay: 0 }}
+            className='time'
           >
             {formattedLocalTime}
           </motion.p>
@@ -157,49 +159,57 @@ const Forecast = ({
               {`${name}, ${country}`}
             </div>
           </motion.p>
-          <motion.img
-            inherit={{ y: '-100%', opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 0, opacity: 0 }}
-            transition={{ duration: 0.5, delay: 0 }}
-            src={weathercond2}
-            alt='rainy'
-            className='weather-img'
-          ></motion.img>
-          <motion.h1
-            initial={{ y: '-100%' }}
-            animate={{ y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: 'easeInOut', delay: 0 }}
-            className='temp'
-          >
-            {`${temp.toFixed()}°`}
-          </motion.h1>
-          <motion.p
-            initial={{ x: '-100%' }}
-            animate={{ x: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, delay: 0 }}
-            className='weather-desc'
-          >
-            {details}
-          </motion.p>
-          <motion.p
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, delay: 0 }}
-            className='high-low'
-          >
-            <p>
-              <ArrowUpward />
-              <span>{`${temp_max.toFixed()}°`}</span>
-            </p>
-            <p>
-              <ArrowDownward />
-              <span>{`${temp_min.toFixed()}°`}</span>
-            </p>
-          </motion.p>
+          <div className='horizontal-details'>
+            <div className='deg-img'>
+              <motion.img
+                inherit={{ y: '-100%', opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 0, opacity: 0 }}
+                transition={{ duration: 0.5, delay: 0 }}
+                src={weathercond2}
+                alt='rainy'
+                className='weather-img'
+              ></motion.img>
+              <motion.h1
+                initial={{ y: '-100%' }}
+                animate={{ y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: 'easeInOut', delay: 0 }}
+                className='temp'
+              >
+                {`${temp.toFixed()}° ${units === 'metric' ? 'C' : 'F'}`}
+              </motion.h1>
+              <motion.p
+                initial={{ x: '-100%' }}
+                animate={{ x: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, delay: 0 }}
+                className='weather-desc'
+              >
+                {details}
+              </motion.p>
+            </div>
+            <motion.p
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5, delay: 0 }}
+              className='high-low'
+            >
+              <p>
+                <ArrowUpward />
+                <span>{`${temp_max.toFixed()}° ${
+                  units === 'metric' ? 'C' : 'F'
+                }`}</span>
+              </p>
+              <p>
+                <ArrowDownward />
+                <span>{`${temp_min.toFixed()}° ${
+                  units === 'metric' ? 'C' : 'F'
+                }`}</span>
+              </p>
+            </motion.p>
+          </div>
           <div className='weather-stats-container'>
             {weatherStatDetails.map(({ id, Icon, title, value }) => (
               <div key={id} className='weather-stat'>

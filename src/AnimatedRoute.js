@@ -64,7 +64,7 @@ const AnimatedRoutes = () => {
             <Route path='/home' element={<Home setQuery={setQuery} />}></Route>
             <Route
               path='/search'
-              element={<Searchbar setQuery={setQuery} setUnits={setUnits} />}
+              element={<Searchbar setQuery={setQuery} />}
             ></Route>
             {weather && (
               <Route
@@ -75,7 +75,7 @@ const AnimatedRoutes = () => {
                     title='3 hours forecast'
                     data={weather.hourly}
                     setQuery={setQuery}
-                    units={{ units }}
+                    units={units}
                     setUnits={setUnits}
                   />
                 }

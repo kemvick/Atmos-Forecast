@@ -89,7 +89,7 @@
   justify-content: center;
   flex-direction: column;
   padding: 0.8rem;
-  background: rgba(7, 6, 47, 0.304);
+  background: #07062f4e;
   gap: 0.3rem;
   border: 1.7px solid rebeccapurple;
   border-bottom: transparent;
@@ -137,10 +137,11 @@
 /* hourly */
 .hourly-forecast-container {
   display: flex;
-  justify-content: center;
+  justify-items: center;
   align-items: center;
   gap: 0.6rem;
 }
+
 .per-hour {
   font-size: 0.6rem;
   background: var(--forecastLabelColor1);
@@ -262,9 +263,69 @@ media queries
 }
 @media screen and (min-width: 1024px) {
   .weather-img {
-    width: 10%;
+    width: 30%;
+    margin: 1.5rem 0;
   }
   .temp-and-details {
     padding: 0 5rem;
+    padding-top: 2rem;
+  }
+  .time {
+    font-size: 0.98rem;
+  }
+  .horizontal-details {
+    /* border: 1px solid #4a1eda; */
+    display: flex;
+    gap: 0.89rem;
+    align-items: center;
+    justify-items: center;
+    padding: 0.89rem 15rem;
+    margin-top: 0.5rem;
+  }
+  .deg-img {
+    display: grid;
+    justify-items: center;
+    margin-left: 2rem;
+    width: 50%;
+    /* margin-left: 0 auto; */
+  }
+  .high-low {
+    width: 30%;
+    border: 1px solid rebeccapurple;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0;
+    background: #07062f4e;
+  }
+  .forecast-container {
+    width: 65%;
+  }
+  .scroll-content {
+    overflow: visible;
+  }
+  .tab-content {
+    overflow: visible;
+  }
+  .hourly-forecast-container {
+    gap: 1.2rem;
+    margin-left: -7rem;
+  }
+  .per-hour {
+    font-size: 0.8rem;
+    padding: 1.5rem 0.77rem;
+    border-radius: 2.5rem;
+  }
+  .tab {
+    font-size: 0.84rem;
+    padding: 12px 5rem;
+  }
+  .tab.active {
+    font-size: 0.94rem;
+  }
+}
+@media screen and (min-width: 1366px) {
+  .forecast-container {
+    width: 70% !important;
+    /* border: 2px solid red; */
+    height: 60vh;
   }
 }

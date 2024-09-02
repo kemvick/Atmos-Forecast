@@ -37,7 +37,7 @@ const Home = ({ setQuery }) => {
               exit={{ y: '-100%' }}
               transition={{ duration: 0.5, delay: 0 }}
             >
-              Choose a search method to get weather informations
+              Choose a search method to get weather information
             </motion.h2>
           </div>
           <div className='search-button'>
