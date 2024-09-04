@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../../index.css'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
@@ -7,15 +7,28 @@ import { motion } from 'framer-motion'
 const Home = ({ setQuery }) => {
   const navigate = useNavigate()
 
+  // loading
+  const [isLoadingButtonOne, setIsLoadingButtonOne] = useState(false)
+  const [isLoadingButtonTwo, setIsLoadingButtonTwo] = useState(false)
   const goToSearch = () => {
-    navigate('/search')
+    setIsLoadingButtonOne(true)
+
+    setTimeout(() => {
+      setIsLoadingButtonOne(false)
+      navigate('/search')
+    }, 2000)
   }
+
   const handleLocation = () => {
+    setIsLoadingButtonTwo(true)
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords
         setQuery({ lat: latitude, lon: longitude })
-        navigate('/forecast')
+        setTimeout(() => {
+          setIsLoadingButtonTwo(false)
+          navigate('/forecast')
+        }, 4000)
       })
     }
   }
@@ -48,9 +61,16 @@ const Home = ({ setQuery }) => {
               transition={{ duration: 0.5, delay: 0 }}
               className='city-btn'
               onClick={goToSearch}
+              disabled={isLoadingButtonOne}
             >
-              <FaMagnifyingGlass size={18} />
-              Search by city name
+              {isLoadingButtonOne ? (
+                <span className='search-loading'></span>
+              ) : (
+                <span>
+                  <FaMagnifyingGlass size={18} />
+                  Search by city name
+                </span>
+              )}
             </motion.button>
             <motion.button
               initial={{ x: '100%' }}
@@ -59,9 +79,16 @@ const Home = ({ setQuery }) => {
               transition={{ duration: 0.5, delay: 0 }}
               className='city-btn'
               onClick={handleLocation}
+              disabled={isLoadingButtonTwo}
             >
-              <TbCurrentLocation size={20} />
-              Current location
+              {isLoadingButtonTwo ? (
+                <span className='search-loading'></span>
+              ) : (
+                <span>
+                  <TbCurrentLocation size={20} />
+                  Current location
+                </span>
+              )}
             </motion.button>
           </div>
         </div>

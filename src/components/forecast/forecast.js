@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../../index.css'
 import './forecast.css'
 import '../weather-search/search.css'
-import weathercond2 from '../../assets/Moon cloud mid rain.png'
+import weathercond2 from '../../assets/04n.png'
 import { FaThermometerEmpty } from 'react-icons/fa'
 import { FaAngleLeft } from 'react-icons/fa'
 import { FiWind } from 'react-icons/fi'
@@ -36,6 +36,7 @@ const Forecast = ({
     sunset,
     speed,
     pressure,
+    icon,
   },
   data,
   setQuery,
@@ -102,6 +103,8 @@ const Forecast = ({
       content: <WeeklyForecast data={data} units={units} />,
     },
   ]
+  console.log(icon)
+
   const navigate = useNavigate()
   const fromForecastToSearch = () => {
     navigate('/search')
@@ -161,15 +164,16 @@ const Forecast = ({
           </motion.p>
           <div className='horizontal-details'>
             <div className='deg-img'>
-              <motion.img
+              {/* <img
                 inherit={{ y: '-100%', opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 0, opacity: 0 }}
                 transition={{ duration: 0.5, delay: 0 }}
-                src={weathercond2}
-                alt='rainy'
+                src='https://api.openweathermap.org/img/wn/10d@2x.png'
+                alt='hey'
                 className='weather-img'
-              ></motion.img>
+              ></img> */}
+              <img src={icon} alt='weather_icon' className='weather-img' />
               <motion.h1
                 initial={{ y: '-100%' }}
                 animate={{ y: 0 }}

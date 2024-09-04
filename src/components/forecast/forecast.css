@@ -51,7 +51,7 @@
 }
 .weather-img {
   width: 50%;
-  margin: 1.5rem auto;
+  margin: 0.59rem auto;
   display: block;
   height: auto;
 }
@@ -61,10 +61,17 @@
 .high-low {
   display: flex;
   justify-content: center;
+  width: 45%;
+  margin: auto;
   gap: 0.5rem;
   opacity: 100%;
   font-size: 0.9rem !important;
+  border: 1px solid rebeccapurple;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0;
+  background: #07062f4e;
 }
+
 .weather-desc {
   opacity: 60%;
   font-size: 0.9rem !important;
@@ -290,7 +297,7 @@ media queries
     /* margin-left: 0 auto; */
   }
   .high-low {
-    width: 30%;
+    width: 40%;
     border: 1px solid rebeccapurple;
     border-radius: 0.5rem;
     padding: 0.5rem 0;

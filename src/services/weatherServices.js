@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon'
+import { getIcon } from '../functions/functions'
 
 const API_KEY = 'b61f46bf84aaaa8369a53271a2168089'
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/'
@@ -7,6 +8,12 @@ const getWeatherData = (infoType, searchParams) => {
   const url = new URL(BASE_URL + infoType)
   url.search = new URLSearchParams({ ...searchParams, appid: API_KEY })
   return fetch(url).then((res) => res.json())
+}
+// const iconUrlFromCode = (icon) =>
+//   `https://api.openweathermap.org/img/wn/${icon}@2x.png`
+function getIconURL(icon) {
+  getIcon(`${icon}`)
+  return `../static/icons/${icon}.png`
 }
 const formatToLocalTime = (
   secs,
@@ -39,7 +46,7 @@ const formatCurrent = (data) => {
     sunset: formatToLocalTime(sunset, timezone, 'hh:mm a'),
     details,
     speed,
-    icon,
+    icon: getIconURL(icon),
     formattedLocalTime,
     visibility,
     lat,

@@ -38,6 +38,18 @@
   align-items: center;
   transition: 1s ease-in-out all;
 }
+.search-loading {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  border: 2px solid #fafafa;
+  border-left: #75f604;
+  border-radius: 50%;
+  width: 20px;
+  margin-left: 6.5rem;
+  height: 20px;
+  animation: spin 2s linear infinite;
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -101,7 +113,6 @@
   display: flex;
   letter-spacing: 0.89px;
   align-items: center;
-  gap: 1rem;
   background: #5936b4;
   color: #fff;
   border-radius: 1.7rem;
@@ -112,6 +123,10 @@
   text-align: left;
   font-size: 0.8rem;
   font-weight: 500;
+}
+.city-btn span {
+  display: flex;
+  gap: 1rem;
 }
 /* 
 ============
@@ -142,8 +157,6 @@ media Queries
     margin-bottom: 0.6rem;
     /* display: flex;
     justify-content: center; */
-  }
-  .city-btn {
   }
 }
 @media screen and (min-width: 768px) {
@@ -201,6 +214,9 @@ media Queries
   }
   .description {
     width: 70%;
+  }
+  .search-loading {
+    /* border: 2px solid rebeccapurple; */
   }
 }
 @media screen and (min-width: 1070px) {

@@ -40,7 +40,7 @@ const AnimatedRoutes = () => {
   //   hourly: weather.hourly,
   //   daily: weather.daily,
   // }
-  const [isLoading, setIsLoading] = useState('true')
+  const [isLoading, setIsLoading] = useState(true)
   const [content, setContent] = useState(null)
   useEffect(() => {
     setTimeout(() => {
