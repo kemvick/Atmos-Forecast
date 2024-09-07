@@ -1,60 +1,43 @@
 import React, { useEffect } from 'react'
-import { FaAngleDown, FaAngleLeft } from 'react-icons/fa'
+import { FaAngleLeft } from 'react-icons/fa'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { useNavigate } from 'react-router-dom'
 // assests
 import assets from '../../assets/Rectangle 1.png'
-import weathercond1 from '../../assets/Moon cloud fast wind.png'
-import weathercond2 from '../../assets/10n.png'
-import weathercond3 from '../../assets/10d.png'
-import './search.css'
 import '../../index.css'
-
+import { fetchWeatherDataForCities } from '../../services/weatherServices'
 import { motion } from 'framer-motion'
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import iconMapping, { defaultIcon } from '../../functions/functions'
 
-const Searchbar = ({ setQuery, setUnits, weather }) => {
-  // Data
-  const cities = [
-    {
-      id: 1,
-      temp: '47°',
-      city_name: 'brass',
-      img: weathercond1,
-      weatherDesc: 'rain',
-    },
-    {
-      id: 2,
-      temp: `67°`,
-      city_name: 'Sydney',
-      img: weathercond2,
-      weatherDesc: ' rain',
-    },
-    {
-      id: 3,
-      temp: `39°`,
-      city_name: 'Tokyo',
-      img: weathercond3,
-      weatherDesc: 'clear',
-    },
-    {
-      id: 4,
-      temp: `50°`,
-      city_name: 'Paris',
-      img: weathercond2,
-      weatherDesc: 'snow',
-    },
-    {
-      id: 5,
-      temp: `20°`,
-      city_name: 'Toronto',
-      img: weathercond1,
-      weatherDesc: 'sun',
-    },
-  ]
-  let scr = window.innerWidth
-  console.log(scr)
+const Searchbar = ({ setQuery }) => {
+  // weather widget
+  const cities = useMemo(
+    () => ['Port Harcourt', 'Otuaka', 'Yenagoa', 'Brass', 'Elebele'],
+    []
+  )
+  const [weatherWidget, setWeatherWidget] = useState([])
+  const [isWidgetLoading, setIsWidgetLoading] = useState(true)
+  const [error, setError] = useState(null)
+  useEffect(() => {
+    const getWeatherData = async () => {
+      try {
+        setIsWidgetLoading(true)
+        const data = await fetchWeatherDataForCities(cities)
+        setWeatherWidget(data)
+        console.log(data)
+        setTimeout(() => {
+          setIsWidgetLoading(false)
+        }, 2000)
+      } catch (error) {
+        setError('failed to fetch weather data')
+        setIsWidgetLoading(false)
+      }
+    }
+    getWeatherData()
+  }, [cities])
+
   // input field
   const [city, setCity] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -62,9 +45,6 @@ const Searchbar = ({ setQuery, setUnits, weather }) => {
   const goBackToHome = () => {
     navigate('/home')
   }
-  // useEffect(() => {
-  //   setQuery({ q: cities.city_name })
-  // }, [cities.city_name, setQuery])
   // Display weather data based on city name
   const handSearchClick = (e) => {
     e.preventDefault()
@@ -91,11 +71,6 @@ const Searchbar = ({ setQuery, setUnits, weather }) => {
               <FaAngleLeft onClick={goBackToHome} className='back-btn' />
               <div>Weather Search</div>
             </div>
-            {/* <div className='units-btn'>
-            <button onClick={displayWeatherInfo}>°C</button>
-            <p>|</p>
-            <button>°F</button>
-          </div>  */}
           </motion.section>
           {/* search bar */}
           <motion.section exit={{ opacity: 0 }} className='search-bar'>
@@ -104,7 +79,7 @@ const Searchbar = ({ setQuery, setUnits, weather }) => {
                 value={city}
                 onChange={(e) => setCity(e.currentTarget.value)}
                 type='text'
-                placeholder='Search city name...'
+                placeholder='Input city name...'
                 className='input'
               />
             </form>
@@ -112,36 +87,55 @@ const Searchbar = ({ setQuery, setUnits, weather }) => {
           </motion.section>
           {/* widgets */}
           <motion.section className='widgets-container'>
-            {cities.map((city) => (
-              <motion.div
-                inherit={{ y: '-100%', opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: '100%', opacity: 0 }}
-                transition={{ duration: 0.5, ease: 'easeInOut', delay: 0 }}
-                key={cities.id}
-                className='widget'
-              >
-                <img src={assets} alt='' className='rect' />
-                <img src={city.img} alt='' className='small-moon' />
-                <div className='widget-details1'>
-                  <h2 className='temp1'>{city.temp}</h2>
-                  <p className='high-low1'>
-                    <p>
-                      <ArrowUpward fontSize='16px' />
-                      <span>10°</span>
-                    </p>
-                    <p>
-                      <ArrowDownward fontSize='16px' />
-                      <span>39°</span>
-                    </p>
-                  </p>
-                  <div className='city-weather-desc'>
-                    <p className='city'> {city.city_name}</p>
-                    <p className='weather-desc1'>{city.weatherDesc}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+            {isWidgetLoading ? (
+              <div className='widget-loading-container'>
+                <div className='single-widget-loading'>loading</div>
+                <div className='single-widget-loading'>loading</div>
+                <div className='single-widget-loading'>loading</div>
+                <div className='single-widget-loading'>loading</div>
+                <div className='single-widget-loading'>loading</div>
+              </div>
+            ) : (
+              weatherWidget.map((cityWeather, index) => {
+                const weatherIconCode = cityWeather.weather[0].icon // OpenWeatherMap icon code
+                const customIcon = iconMapping[weatherIconCode] || defaultIcon
+
+                return (
+                  <motion.div
+                    inherit={{ y: '-100%', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: '100%', opacity: 0 }}
+                    transition={{ duration: 0.5, ease: 'easeInOut', delay: 0 }}
+                    key={index}
+                    className='widget'
+                  >
+                    <img src={assets} alt='' className='rect' />
+                    <img src={customIcon} alt='' className='small-moon' />
+                    <div className='widget-details1'>
+                      <h2 className='temp1'>
+                        {cityWeather.main.temp.toFixed()}°C
+                      </h2>
+                      <p className='high-low1'>
+                        <p>
+                          <ArrowUpward fontSize='16px' />
+                          <span>{cityWeather.main.temp_max.toFixed()}°C</span>
+                        </p>
+                        <p>
+                          <ArrowDownward fontSize='16px' />
+                          <span>{cityWeather.main.temp_min.toFixed()}°C</span>
+                        </p>
+                      </p>
+                      <div className='city-weather-desc'>
+                        <p className='city'> {cityWeather.name}</p>
+                        <p className='weather-desc1'>
+                          {cityWeather.weather[0].description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )
+              })
+            )}
           </motion.section>
         </section>
       )}

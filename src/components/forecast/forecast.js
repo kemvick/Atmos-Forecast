@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../../index.css'
 import './forecast.css'
 import '../weather-search/search.css'
-import weathercond2 from '../../assets/04n.png'
+import weathercond2 from '../../assets/10d.png'
 import { FaThermometerEmpty } from 'react-icons/fa'
 import { FaAngleLeft } from 'react-icons/fa'
 import { FiWind } from 'react-icons/fi'
@@ -15,6 +15,7 @@ import WeeklyForecast from './WeeklyForecast.js'
 import TabBar from './tabBar.js'
 import { useNavigate } from 'react-router-dom'
 import { motion, useAnimation } from 'framer-motion'
+import iconMapping, { defaultIcon } from '../../functions/functions'
 
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
 import { IoLocation } from 'react-icons/io5'
@@ -32,6 +33,7 @@ const Forecast = ({
     temp_max,
     humidity,
     details,
+    description,
     sunrise,
     sunset,
     speed,
@@ -87,7 +89,7 @@ const Forecast = ({
       id: 6,
       Icon: MdOutlineCompress,
       title: 'Pressure',
-      value: `${pressure} Pa`,
+      value: `${pressure} ${units === 'metric' ? 'mb' : 'inHmg'}`,
     },
   ]
   const [activeTab, setActiveTab] = useState(0)
@@ -96,14 +98,14 @@ const Forecast = ({
   const tabs = [
     {
       label: 'Hourly Forecast',
-      content: <HourlyForecast data={data} units={units} />,
+      content: <HourlyForecast data={data} units={units} icon={icon} />,
     },
     {
       label: 'Daily Forecast',
-      content: <WeeklyForecast data={data} units={units} />,
+      content: <WeeklyForecast data={data} units={units} icon={icon} />,
     },
   ]
-  console.log(icon)
+  // console.log(icon)
 
   const navigate = useNavigate()
   const fromForecastToSearch = () => {
@@ -120,6 +122,8 @@ const Forecast = ({
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+  const customIcon = iconMapping[icon] || defaultIcon
+  console.log(customIcon)
   return (
     <>
       <div className='forecast-page'></div>
@@ -164,16 +168,16 @@ const Forecast = ({
           </motion.p>
           <div className='horizontal-details'>
             <div className='deg-img'>
-              {/* <img
+              <img
                 inherit={{ y: '-100%', opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 0, opacity: 0 }}
                 transition={{ duration: 0.5, delay: 0 }}
-                src='https://api.openweathermap.org/img/wn/10d@2x.png'
-                alt='hey'
+                src={icon}
+                alt='icon'
                 className='weather-img'
-              ></img> */}
-              <img src={icon} alt='weather_icon' className='weather-img' />
+              />
+              {/* <img src={icon} alt='weather_icon' className='weather-img' /> */}
               <motion.h1
                 initial={{ y: '-100%' }}
                 animate={{ y: 0 }}
@@ -190,7 +194,7 @@ const Forecast = ({
                 transition={{ duration: 0.5, delay: 0 }}
                 className='weather-desc'
               >
-                {details}
+                {description}
               </motion.p>
             </div>
             <motion.p

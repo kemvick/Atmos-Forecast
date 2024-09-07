@@ -9,12 +9,12 @@ const getWeatherData = (infoType, searchParams) => {
   url.search = new URLSearchParams({ ...searchParams, appid: API_KEY })
   return fetch(url).then((res) => res.json())
 }
-// const iconUrlFromCode = (icon) =>
-//   `https://api.openweathermap.org/img/wn/${icon}@2x.png`
-function getIconURL(icon) {
-  getIcon(`${icon}`)
-  return `../static/icons/${icon}.png`
-}
+const iconUrlFromCode = (icon) =>
+  `https://api.openweathermap.org/img/w/${icon}@2x.png`
+// function getIconURL(icon) {
+//   getIcon(`${icon}`)
+//   return `../static/icons/${icon}.png`
+// }
 const formatToLocalTime = (
   secs,
   offset,
@@ -33,7 +33,7 @@ const formatCurrent = (data) => {
     wind: { speed },
   } = data
 
-  const { main: details, icon } = weather[0]
+  const { main: details, description, icon } = weather[0]
   const formattedLocalTime = formatToLocalTime(dt, timezone)
   return {
     temp,
@@ -45,8 +45,9 @@ const formatCurrent = (data) => {
     sunrise: formatToLocalTime(sunrise, timezone, 'hh:mm a'),
     sunset: formatToLocalTime(sunset, timezone, 'hh:mm a'),
     details,
+    description,
     speed,
-    icon: getIconURL(icon),
+    icon: iconUrlFromCode(icon),
     formattedLocalTime,
     visibility,
     lat,
@@ -77,6 +78,17 @@ const formatForecastWeather = (secs, offset, data) => {
     }))
   return { hourly, daily }
 }
+// Weather Widget Fetch
+export const fetchWeatherDataForCities = async (cities) => {
+  const responses = await Promise.all(
+    cities.map((city) =>
+      fetch(`${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`)
+    )
+  )
+  const data = await Promise.all(responses.map((response) => response.json()))
+  return data
+}
+
 const getformattedWeatherData = async (searchParams) => {
   const formattedCurrentWeather = await getWeatherData(
     'weather',

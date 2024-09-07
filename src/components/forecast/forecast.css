@@ -109,6 +109,10 @@
   font-size: 0.6rem;
   text-transform: none;
 }
+.daily-weekly-img {
+  width: 70%;
+  margin: auto;
+}
 .weather-map {
   display: grid;
   gap: 1rem;

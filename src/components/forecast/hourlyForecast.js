@@ -1,7 +1,7 @@
 import React from 'react'
 import './forecast.css'
-import moon from '../../assets/Small Moon cloud mid rain.png'
-const HourlyForecast = ({ data, units }) => {
+import moon from '../../assets/Small Sun cloud mid rain.png'
+const HourlyForecast = ({ data, units, icon }) => {
   // const { hourly } = data
   return (
     <>
@@ -9,7 +9,7 @@ const HourlyForecast = ({ data, units }) => {
         {data.map((d, index) => (
           <div key={index} className='per-hour'>
             <p>{d.title}</p>
-            <img src={moon} alt='' className='daily-weekly-img' />
+            <img src={icon} alt='' className='daily-weekly-img' />
             <p>{`${d.temp.toFixed()}°${units === 'metric' ? 'C' : 'F'}`}</p>
           </div>
         ))}

@@ -166,6 +166,23 @@
 }
 .weather-desc1 {
   font-size: 0.6rem;
+  opacity: 70%;
+}
+.city-weather-desc {
+  gap: 2rem;
+}
+.widget-loading-container {
+  display: grid;
+  gap: 0.9rem;
+  height: 100vh;
+  width: 100%;
+  /* border: 1px solid red; */
+}
+.single-widget-loading {
+  padding: 2rem 1.5rem;
+  background: #17183f;
+  /* border: green 2px solid; */
+  border-radius: 0.5rem;
 }
 /* 
 =============
@@ -330,5 +347,9 @@ media queries
     top: 20px;
     right: 50px;
     width: 120px;
+  }
+  .city-weather-desc {
+    gap: 5rem;
+    align-items: center;
   }
 }

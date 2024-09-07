@@ -8,7 +8,7 @@ function WeeklyForecast({ data, units }) {
       {data.map((d, index) => (
         <div key={index} className='per-hour'>
           <p>{d.title}</p>
-          <img src={sun} alt='' />
+          <img src={sun} alt='' className='daily-weekly-img' />
           <p>{`${d.temp.toFixed()}° ${units === 'metric' ? 'C' : 'F'}`}</p>
         </div>
       ))}

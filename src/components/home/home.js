@@ -4,7 +4,7 @@ import '../../index.css'
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 import { TbCurrentLocation } from 'react-icons/tb'
 import { motion } from 'framer-motion'
-const Home = ({ setQuery }) => {
+const Home = ({ setQuery, icon }) => {
   const navigate = useNavigate()
 
   // loading
@@ -28,7 +28,7 @@ const Home = ({ setQuery }) => {
         setTimeout(() => {
           setIsLoadingButtonTwo(false)
           navigate('/forecast')
-        }, 4000)
+        }, 3000)
       })
     }
   }
