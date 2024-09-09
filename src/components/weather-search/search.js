@@ -32,7 +32,7 @@ const Searchbar = ({ setQuery }) => {
         }, 2000)
       } catch (error) {
         setError('failed to fetch weather data')
-        setIsWidgetLoading(false)
+        setIsWidgetLoading(true)
       }
     }
     getWeatherData()
@@ -59,9 +59,10 @@ const Searchbar = ({ setQuery }) => {
   return (
     <>
       {isLoading ? (
-        <div className='spinner-container'>
+        <div className='spinner-container search-sc'>
           <div className='loading'>
-            <div className='loading-spinner'></div>
+            <div className='loading-spinner search-ls'></div>
+            <p>Processing Request...</p>
           </div>
         </div>
       ) : (
@@ -89,17 +90,16 @@ const Searchbar = ({ setQuery }) => {
           <motion.section className='widgets-container'>
             {isWidgetLoading ? (
               <div className='widget-loading-container'>
-                <div className='single-widget-loading'>loading</div>
-                <div className='single-widget-loading'>loading</div>
-                <div className='single-widget-loading'>loading</div>
-                <div className='single-widget-loading'>loading</div>
-                <div className='single-widget-loading'>loading</div>
+                <div className='single-widget-loading'></div>
+                <div className='single-widget-loading'></div>
+                <div className='single-widget-loading'></div>
+                <div className='single-widget-loading'></div>
+                <div className='single-widget-loading'></div>
               </div>
             ) : (
               weatherWidget.map((cityWeather, index) => {
-                const weatherIconCode = cityWeather.weather[0].icon // OpenWeatherMap icon code
+                const weatherIconCode = cityWeather.weather[0].icon
                 const customIcon = iconMapping[weatherIconCode] || defaultIcon
-
                 return (
                   <motion.div
                     inherit={{ y: '-100%', opacity: 0 }}

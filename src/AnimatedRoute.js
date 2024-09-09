@@ -35,11 +35,7 @@ const AnimatedRoutes = () => {
     getWeather()
   }, [query, units])
   const location = useLocation()
-  // hour and daily
-  // const weatherData = {
-  //   hourly: weather.hourly,
-  //   daily: weather.daily,
-  // }
+
   const [isLoading, setIsLoading] = useState(true)
   const [content, setContent] = useState(null)
   useEffect(() => {
@@ -73,7 +69,7 @@ const AnimatedRoutes = () => {
                   <Forecast
                     weather={weather}
                     title='3 hours forecast'
-                    data={weather.hourly}
+                    data={weather}
                     setQuery={setQuery}
                     units={units}
                     setUnits={setUnits}

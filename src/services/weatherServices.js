@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { getIcon } from '../functions/functions'
+// import { getIcon } from '../functions/functions'
 
 const API_KEY = 'b61f46bf84aaaa8369a53271a2168089'
 const BASE_URL = 'https://api.openweathermap.org/data/2.5/'

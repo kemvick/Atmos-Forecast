@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import '../../index.css'
 import './forecast.css'
 import '../weather-search/search.css'
-import weathercond2 from '../../assets/10d.png'
 import { FaThermometerEmpty } from 'react-icons/fa'
 import { FaAngleLeft } from 'react-icons/fa'
 import { FiWind } from 'react-icons/fi'
@@ -14,13 +13,31 @@ import HourlyForecast from './hourlyForecast.js'
 import WeeklyForecast from './WeeklyForecast.js'
 import TabBar from './tabBar.js'
 import { useNavigate } from 'react-router-dom'
-import { motion, useAnimation } from 'framer-motion'
-import iconMapping, { defaultIcon } from '../../functions/functions'
-
+import { motion } from 'framer-motion'
+// import iconMapping, { defaultIcon } from '../../functions/functions'
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
 import { IoLocation } from 'react-icons/io5'
-// import { Map } from '../map.js'
-// import getformattedWeatherData from './services/weatherServices'
+import MapComponent from '../map/map.js'
+import customIcon01d from '../../static/icons/01d.png'
+import customIcon01n from '../../static/icons/01n.png'
+import customIcon02d from '../../static/icons/02d.png'
+import customIcon02n from '../../static/icons/02n.png'
+import customIcon03d from '../../static/icons/03d.png'
+import customIcon03n from '../../static/icons/03n.png'
+import customIcon04d from '../../static/icons/04d.png'
+import customIcon04n from '../../static/icons/04n.png'
+import customIcon09d from '../../static/icons/09d.png'
+import customIcon09n from '../../static/icons/09n.png'
+import customIcon10d from '../../static/icons/10d.png'
+import customIcon10n from '../../static/icons/10n.png'
+import customIcon11d from '../../static/icons/11d.png'
+import customIcon11n from '../../static/icons/11n.png'
+import customIcon13d from '../../static/icons/13d.png'
+import customIcon13n from '../../static/icons/13n.png'
+import customIcon50d from '../../static/icons/50d.png'
+import customIcon50n from '../../static/icons/50n.png'
+
+const API_KEY = 'b61f46bf84aaaa8369a53271a2168089'
 
 const Forecast = ({
   weather: {
@@ -32,28 +49,69 @@ const Forecast = ({
     temp_min,
     temp_max,
     humidity,
-    details,
     description,
     sunrise,
     sunset,
     speed,
     pressure,
     icon,
+    lat,
+    lon,
   },
   data,
   setQuery,
   units,
   setUnits,
 }) => {
-  // scroll animation
-  // const controls = useAnimation()
-  // const [ref, inView] = useInView({ triggerOnce: true })
+  const [latLon, setLatLon] = useState([lat, lon]) // Initialize with weather coordinates
 
-  // React.useEffect(() => {
-  //   if (inView) {
-  //     controls.start('visible')
-  //   }
-  // }, [controls, inView])
+  // Fetch weather data based on lat and lon
+  const fetchWeatherByLatLon = async (lat, lon) => {
+    try {
+      if (lat && lon) {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${API_KEY}`
+        )
+        if (!response.ok) {
+          throw new Error('Failed to fetch weather data.')
+        }
+        const data = await response.json()
+        setQuery(data.name) // Update the city based on fetched data
+      }
+    } catch (error) {
+      console.error('Error fetching weather data:', error)
+    }
+  }
+
+  useEffect(() => {
+    // Fetch weather data when user clicks on the map or drags the marker
+    if (latLon[0] && latLon[1]) {
+      fetchWeatherByLatLon(latLon[0], latLon[1])
+    }
+  }, [latLon])
+  console.log(latLon)
+
+  // iconmapping
+  const iconMapping = {
+    '01d': customIcon01d,
+    '01n': customIcon01n,
+    '02d': customIcon02d,
+    '02n': customIcon02n,
+    '03d': customIcon03d,
+    '03n': customIcon03n,
+    '04d': customIcon04d,
+    '04n': customIcon04n,
+    '09d': customIcon09d,
+    '09n': customIcon09n,
+    '10d': customIcon10d,
+    '10n': customIcon10n,
+    '11d': customIcon11d,
+    '11n': customIcon11n,
+    '13d': customIcon13d,
+    '13n': customIcon13n,
+    '50d': customIcon50d,
+    '50n': customIcon50n,
+  }
   const weatherStatDetails = [
     {
       id: 1,
@@ -95,14 +153,29 @@ const Forecast = ({
   const [activeTab, setActiveTab] = useState(0)
   const [activeTabBar, setActiveTabBar] = useState(0)
   const [showTabBar, setShowTabBar] = useState(false)
+  const customIcon = iconMapping[icon] || icon
   const tabs = [
     {
       label: 'Hourly Forecast',
-      content: <HourlyForecast data={data} units={units} icon={icon} />,
+      content: (
+        <HourlyForecast
+          data={data.hourly}
+          units={units}
+          icon={icon}
+          customIcon={customIcon}
+        />
+      ),
     },
     {
       label: 'Daily Forecast',
-      content: <WeeklyForecast data={data} units={units} icon={icon} />,
+      content: (
+        <WeeklyForecast
+          data={data.daily}
+          units={units}
+          icon={icon}
+          customIcon={customIcon}
+        />
+      ),
     },
   ]
   // console.log(icon)
@@ -122,11 +195,8 @@ const Forecast = ({
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-  const customIcon = iconMapping[icon] || defaultIcon
-  console.log(customIcon)
   return (
     <>
-      <div className='forecast-page'></div>
       <section className='weather-details'>
         <section className='search-header search'>
           <div className='header-title'>
@@ -173,7 +243,7 @@ const Forecast = ({
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 0, opacity: 0 }}
                 transition={{ duration: 0.5, delay: 0 }}
-                src={icon}
+                src={customIcon}
                 alt='icon'
                 className='weather-img'
               />
@@ -251,7 +321,14 @@ const Forecast = ({
           {/* map */}
           <div className='weather-map'>
             weather map
-            <div className='map'></div>
+            <MapComponent
+              lat={latLon[0]}
+              lon={latLon[1]}
+              setLatLon={setLatLon}
+              fetchWeatherData={fetchWeatherByLatLon}
+            />
+            {/* <div className='map'>
+            </div> */}
           </div>
           {/* <Map /> */}
         </div>

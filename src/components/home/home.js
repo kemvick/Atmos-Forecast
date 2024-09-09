@@ -25,9 +25,9 @@ const Home = ({ setQuery, icon }) => {
       navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords
         setQuery({ lat: latitude, lon: longitude })
+        navigate('/forecast')
         setTimeout(() => {
           setIsLoadingButtonTwo(false)
-          navigate('/forecast')
         }, 3000)
       })
     }
