@@ -18,6 +18,17 @@
     transform: translateY(0);
   }
 }
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
 .search-header {
   position: fixed;
   z-index: 11;
@@ -180,7 +191,8 @@
 }
 .single-widget-loading {
   padding: 2rem 1.5rem;
-  background: #17183f;
+  animation: pulse 2s linear infinite;
+  background: #161743;
   border-radius: 1rem;
 }
 .search-ls {
@@ -365,7 +377,7 @@ media queries
     grid-template-columns: repeat(3, 1fr);
   }
   .single-widget-loading {
-    width: 398px;
-    height: 250px;
+    width: 445px;
+    height: 270px;
   }
 }

@@ -311,6 +311,9 @@ media queries
   .forecast-container {
     width: 65%;
   }
+  .tab-bar {
+    display: none;
+  }
   .scroll-content {
     overflow: visible;
   }

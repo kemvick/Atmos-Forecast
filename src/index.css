@@ -133,6 +133,8 @@
 }
 .city-btn span {
   display: flex;
+  align-items: center;
+  justify-items: center;
   gap: 1rem;
 }
 /* 
@@ -226,9 +228,19 @@ media Queries
     /* border: 2px solid rebeccapurple; */
   }
 }
+@media screen and (min-width: 1024px) {
+  .city-btn span {
+    font-size: 0.65rem;
+  }
+}
 @media screen and (min-width: 1070px) {
   .home-hero {
     height: 87vh;
     background: url('./assets/medium-House\ .png') center/cover no-repeat;
+  }
+}
+@media screen and (min-width: 1336px) {
+  .city-btn span {
+    font-size: 1.3rem;
   }
 }
