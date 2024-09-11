@@ -55,8 +55,8 @@ const Forecast = ({
     speed,
     pressure,
     icon,
-    lat,
-    lon,
+    lat = 4.9247,
+    lon = 6.2642,
   },
   data,
   setQuery,
@@ -153,7 +153,7 @@ const Forecast = ({
   const [activeTab, setActiveTab] = useState(0)
   const [activeTabBar, setActiveTabBar] = useState(0)
   const [showTabBar, setShowTabBar] = useState(false)
-  const customIcon = iconMapping['01n'] || icon
+  const customIcon = iconMapping['10n'] || icon
   const tabs = [
     {
       label: 'Hourly Forecast',
@@ -330,7 +330,6 @@ const Forecast = ({
             {/* <div className='map'>
             </div> */}
           </div>
-          {/* <Map /> */}
         </div>
         {showTabBar && (
           <TabBar

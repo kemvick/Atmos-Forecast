@@ -24,8 +24,13 @@ const markerIcon = new L.Icon({
 })
 
 // Create a map component that will take the user's location (city or geolocation)
-const MapComponent = ({ lat, lon, setLatLon, fetchWeatherData }) => {
-  const [position, setPosition] = useState([lat, lon])
+const MapComponent = ({
+  lat = 40.7128,
+  lon = -74.006,
+  setLatLon,
+  fetchWeatherData,
+}) => {
+  const [position, setPosition] = useState({ lat, lng: lon })
 
   // Handle map click to update position
   const MapEvents = () => {
@@ -41,7 +46,9 @@ const MapComponent = ({ lat, lon, setLatLon, fetchWeatherData }) => {
   }
 
   useEffect(() => {
-    setPosition([lat, lon])
+    if (lat && lon) {
+      setPosition([lat, lon])
+    }
   }, [lat, lon])
 
   return (

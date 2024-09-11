@@ -28,7 +28,7 @@ const Home = ({ setQuery, icon }) => {
         navigate('/forecast')
         setTimeout(() => {
           setIsLoadingButtonTwo(false)
-        }, 3000)
+        }, 2000)
       })
     }
   }

@@ -50,10 +50,8 @@
   gap: 0.2rem;
 }
 .weather-img {
-  width: 50%;
+  width: 30%;
   margin: 0.59rem auto;
-  display: block;
-  height: auto;
 }
 .city-name {
   font-weight: 700;
@@ -342,5 +340,8 @@ media queries
     width: 70% !important;
     /* border: 2px solid red; */
     height: 60vh;
+  }
+  .weather-img {
+    width: 6rem;
   }
 }

@@ -55,7 +55,7 @@ const Searchbar = ({ setQuery }) => {
       navigate(`/forecast`)
     }, 2000)
   }
-
+  // handle view default cities weather details
   return (
     <>
       {isLoading ? (
@@ -99,15 +99,22 @@ const Searchbar = ({ setQuery }) => {
             ) : (
               weatherWidget.map((cityWeather, index) => {
                 const weatherIconCode = cityWeather.weather[0].icon
+                const handleDefuailtCitiesWeatherInfo = () => {
+                  setQuery({ q: cityWeather.name })
+                  setTimeout(() => {
+                    navigate('/forecast')
+                  }, 500)
+                }
                 const customIcon = iconMapping[weatherIconCode] || defaultIcon
                 return (
-                  <motion.div
+                  <motion.button
                     inherit={{ y: '-100%', opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: '100%', opacity: 0 }}
                     transition={{ duration: 0.5, ease: 'easeInOut', delay: 0 }}
                     key={index}
                     className='widget'
+                    onClick={handleDefuailtCitiesWeatherInfo}
                   >
                     <img src={assets} alt='' className='rect' />
                     <img src={customIcon} alt='' className='small-moon' />
@@ -132,7 +139,7 @@ const Searchbar = ({ setQuery }) => {
                         </p>
                       </div>
                     </div>
-                  </motion.div>
+                  </motion.button>
                 )
               })
             )}

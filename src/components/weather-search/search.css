@@ -19,15 +19,15 @@
   }
 }
 @keyframes pulse {
-  0% {
+  to {
     opacity: 0.5;
   }
-  50% {
+  /* 50% {
     opacity: 1;
   }
   100% {
     opacity: 0.5;
-  }
+  } */
 }
 .search-header {
   position: fixed;
@@ -54,27 +54,6 @@
   gap: 0.5rem;
   align-items: center;
 }
-/* .settings-btn {
-  background: rebeccapurple;
-  font-size: 0.8rem;
-  padding: 0.05rem 0.3rem;
-  border-radius: 0.4rem;
-} */
-/* .units-logo {
-  display: flex;
-  gap: 0.4rem;
-  align-items: center;
-} */
-/* .unit-list {
-  display: none;
-  background: rebeccapurple;
-  font-size: 0.8rem;
-  padding: 0.05rem 0.3rem;
-  border-radius: 0.4rem;
-} */
-/* .unit-btn .unit-list {
-  display: block;
-} */
 .units-btn {
   display: flex;
   align-items: center;
@@ -163,8 +142,9 @@
   gap: 5rem;
   align-items: center;
 }
-.temp {
-  font-size: 1.9rem;
+.temp1 {
+  font-size: 1.3rem;
+  text-align: start;
 }
 .city {
   font-size: 0.8rem;
@@ -181,6 +161,7 @@
 }
 .city-weather-desc {
   gap: 7rem;
+  align-items: center;
 }
 .widget-loading-container {
   display: grid;
@@ -191,8 +172,8 @@
 }
 .single-widget-loading {
   padding: 2rem 1.5rem;
-  animation: pulse 2s linear infinite;
-  background: #161743;
+  animation: pulse 2s ease-in-out infinite;
+  background: #0e104a;
   border-radius: 1rem;
 }
 .search-ls {
@@ -377,7 +358,7 @@ media queries
     grid-template-columns: repeat(3, 1fr);
   }
   .single-widget-loading {
-    width: 445px;
+    width: 395px;
     height: 270px;
   }
 }

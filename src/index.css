@@ -241,6 +241,6 @@ media Queries
 }
 @media screen and (min-width: 1336px) {
   .city-btn span {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 }
