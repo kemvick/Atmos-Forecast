@@ -50,8 +50,8 @@
   gap: 0.2rem;
 }
 .weather-img {
-  width: 30%;
-  margin: 0.59rem auto;
+  width: 45%;
+  margin: 0.3rem auto;
 }
 .city-name {
   font-weight: 700;
@@ -76,7 +76,7 @@
   padding: 0.9rem 0.4rem;
 }
 .temp {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
 }
 .weather-stats-container {
@@ -238,6 +238,9 @@
 .tab-item.tab.active {
   background: red;
 }
+/* .map-container {
+  z-index: -2;
+} */
 /* 
 =============
 media queries 

@@ -31,7 +31,7 @@
 }
 .search-header {
   position: fixed;
-  z-index: 11;
+  z-index: 999;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -139,9 +139,13 @@
 .city-weather-desc {
   display: flex;
   justify-content: space-between;
-  gap: 5rem;
+  gap: 5.8rem;
   align-items: center;
 }
+.weather-desc1 {
+  text-align: right;
+}
+
 .temp1 {
   font-size: 1.3rem;
   text-align: start;
@@ -158,10 +162,6 @@
 .weather-desc1 {
   font-size: 0.6rem;
   opacity: 70%;
-}
-.city-weather-desc {
-  gap: 7rem;
-  align-items: center;
 }
 .widget-loading-container {
   display: grid;

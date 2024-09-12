@@ -20,27 +20,34 @@ const AnimatedRoutes = () => {
   const [units, setUnits] = useState('metric')
   const [weather, setWeather] = useState(null)
   const getWeather = async () => {
-    const message = query.q ? query.q : 'current location'
-    toast.info(
-      `Retrieving weather information for ${capitalizFirstLetter(message)}`
-    )
-    await getformattedWeatherData({ ...query, units }).then((data) => {
+    try {
+      const message = query.q ? query.q : 'current location'
+      toast.info(
+        `Retrieving weather information for ${capitalizFirstLetter(message)}`
+      )
+
+      const data = await getformattedWeatherData({ ...query, units })
       toast.success(
         `Retrieved weather information for ${data.name}, ${data.country}`
       )
       setWeather(data)
-    })
+    } catch (error) {
+      console.error('Error fetching weather:', error)
+      toast.error('Failed to retrieve weather information.')
+    }
   }
   useEffect(() => {
-    getWeather()
+    if (query.q) {
+      getWeather()
+    }
   }, [query, units])
   const location = useLocation()
 
   const [isLoading, setIsLoading] = useState(true)
-  const [content, setContent] = useState(null)
+  // const [content, setContent] = useState(null)
   useEffect(() => {
     setTimeout(() => {
-      setContent('content')
+      // setContent('content')
       setIsLoading(false)
     }, 3000)
   })
@@ -50,7 +57,7 @@ const AnimatedRoutes = () => {
         <div className='spinner-container'>
           <div className='loading'>
             <div className='loading-spinner'></div>
-            <p>loading..</p>
+            <p>loading...</p>
           </div>
         </div>
       ) : (

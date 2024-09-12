@@ -14,30 +14,11 @@ import WeeklyForecast from './WeeklyForecast.js'
 import TabBar from './tabBar.js'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-// import iconMapping, { defaultIcon } from '../../functions/functions'
+import iconMapping from '../../functions/functions'
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
 import { IoLocation } from 'react-icons/io5'
 import MapComponent from '../map/map.js'
-// import customIcon01d from '../../static/icons/01d.png'
-// import customIcon01n from '../../static/icons/01n.png'
-// import customIcon02d from '../../static/icons/02d.png'
-// import customIcon02n from '../../static/icons/02n.png'
-// import customIcon03d from '../../static/icons/03d.png'
-// import customIcon03n from '../../static/icons/03n.png'
-// import customIcon04d from '../../static/icons/04d.png'
-// import customIcon04n from '../../static/icons/04n.png'
-// import customIcon09d from '../../static/icons/09d.png'
-// import customIcon09n from '../../static/icons/09n.png'
-// import customIcon10d from '../../static/icons/10d.png'
-// import customIcon10n from '../../static/icons/10n.png'
-// import customIcon11d from '../../static/icons/11d.png'
-// import customIcon11n from '../../static/icons/11n.png'
-// import customIcon13d from '../../static/icons/13d.png'
-// import customIcon13n from '../../static/icons/13n.png'
-// import customIcon50d from '../../static/icons/50d.png'
-// import customIcon50n from '../../static/icons/50n.png'
-
-const API_KEY = 'b61f46bf84aaaa8369a53271a2168089'
+import { fetchWeatherByLatLon } from '../../services/weatherServices'
 
 const Forecast = ({
   weather: {
@@ -63,55 +44,22 @@ const Forecast = ({
   units,
   setUnits,
 }) => {
-  const [latLon, setLatLon] = useState([lat, lon]) // Initialize with weather coordinates
-
-  // Fetch weather data based on lat and lon
-  const fetchWeatherByLatLon = async (lat, lon) => {
-    try {
-      if (lat && lon) {
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=${units}&appid=${API_KEY}`
-        )
-        if (!response.ok) {
-          throw new Error('Failed to fetch weather data.')
-        }
-        const data = await response.json()
-        setQuery(data.name) // Update the city based on fetched data
-      }
-    } catch (error) {
-      console.error('Error fetching weather data:', error)
-    }
-  }
+  const [latLon, setLatLon] = useState({ lat, lon }) // Initialize with weather coordinates
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    // Fetch weather data when user clicks on the map or drags the marker
-    if (latLon[0] && latLon[1]) {
-      fetchWeatherByLatLon(latLon[0], latLon[1])
+    if (latLon.lat && latLon.lon) {
+      setLoading(true)
+      fetchWeatherByLatLon(latLon.lat, latLon.lon)
+        .then(() => setLoading(false))
+        .catch((error) => {
+          console.error('Error fetching weather data:', error)
+          setLoading(false)
+        })
     }
   }, [latLon])
-  console.log(latLon)
 
-  // iconmapping
-  const iconMapping = {
-    '01d': require('../../static/icons/01d.png'),
-    '01n': require('../../static/icons/01n.png'),
-    '02d': require('../../static/icons/02d.png'),
-    '02n': require('../../static/icons/02n.png'),
-    '03d': require('../../static/icons/03d.png'),
-    '03n': require('../../static/icons/03n.png'),
-    '04d': require('../../static/icons/04d.png'),
-    '04n': require('../../static/icons/04n.png'),
-    '09d': require('../../static/icons/09d.png'),
-    '09n': require('../../static/icons/09n.png'),
-    '10d': require('../../static/icons/10d.png'),
-    '10n': require('../../static/icons/10n.png'),
-    '11d': require('../../static/icons/11d.png'),
-    '11n': require('../../static/icons/11n.png'),
-    '13d': require('../../static/icons/13d.png'),
-    '13n': require('../../static/icons/13n.png'),
-    '50d': require('../../static/icons/50d.png'),
-    '50n': require('../../static/icons/50n.png'),
-  }
+  // Weather details
   const weatherStatDetails = [
     {
       id: 1,
@@ -150,10 +98,12 @@ const Forecast = ({
       value: `${pressure} ${units === 'metric' ? 'mb' : 'inHmg'}`,
     },
   ]
+
   const [activeTab, setActiveTab] = useState(0)
   const [activeTabBar, setActiveTabBar] = useState(0)
   const [showTabBar, setShowTabBar] = useState(false)
-  const customIcon = iconMapping['10n'] || icon
+  const customIcon = iconMapping[icon] || icon
+
   const tabs = [
     {
       label: 'Hourly Forecast',
@@ -178,12 +128,12 @@ const Forecast = ({
       ),
     },
   ]
-  // console.log(icon)
 
   const navigate = useNavigate()
   const fromForecastToSearch = () => {
     navigate('/search')
   }
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 650) {
@@ -195,6 +145,7 @@ const Forecast = ({
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
   return (
     <>
       <section className='weather-details'>
@@ -247,7 +198,6 @@ const Forecast = ({
                 alt='icon'
                 className='weather-img'
               />
-              {/* <img src={icon} alt='weather_icon' className='weather-img' /> */}
               <motion.h1
                 initial={{ y: '-100%' }}
                 animate={{ y: 0 }}
@@ -318,17 +268,16 @@ const Forecast = ({
               </div>
             </div>
           </div>
-          {/* map */}
+          {/* Map Component */}
           <div className='weather-map'>
-            weather map
             <MapComponent
-              lat={latLon[0]}
-              lon={latLon[1]}
+              lat={latLon.lat}
+              lon={latLon.lon}
               setLatLon={setLatLon}
-              fetchWeatherData={fetchWeatherByLatLon}
+              fetchWeatherData={(lat, lon) =>
+                fetchWeatherByLatLon(lat, lon, setQuery)
+              } // pass setQuery
             />
-            {/* <div className='map'>
-            </div> */}
           </div>
         </div>
         {showTabBar && (
@@ -342,4 +291,5 @@ const Forecast = ({
     </>
   )
 }
+
 export default Forecast

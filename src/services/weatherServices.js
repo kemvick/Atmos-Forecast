@@ -21,6 +21,10 @@ const formatToLocalTime = (
   format = "cccc, dd LLL yyyy' | Local time: 'hh:mm a"
 ) => DateTime.fromSeconds(secs + offset, { zone: 'utc' }).toFormat(format)
 const formatCurrent = (data) => {
+  if (!data || !data.coord) {
+    console.error('Missing coordinates in API response:', data)
+    throw new Error('Invalid weather data: Missing coordinates.')
+  }
   const {
     coord: { lon, lat },
     dt,
@@ -88,12 +92,32 @@ export const fetchWeatherDataForCities = async (cities) => {
   const data = await Promise.all(responses.map((response) => response.json()))
   return data
 }
-
+// Fetch weather data based on lat and lon
+export const fetchWeatherByLatLon = async (lat, lon, setQuery) => {
+  try {
+    if (lat && lon) {
+      const response = await fetch(
+        `${BASE_URL}/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
+      )
+      if (!response.ok) {
+        throw new Error('Failed to fetch weather data.')
+      }
+      const data = await response.json()
+      setQuery(data.name) // Update the city based on fetched data
+    }
+  } catch (error) {
+    console.error('Error fetching weather data:', error)
+  }
+}
 const getformattedWeatherData = async (searchParams) => {
   const formattedCurrentWeather = await getWeatherData(
     'weather',
     searchParams
   ).then(formatCurrent)
+
+  if (!formattedCurrentWeather.lat || !formattedCurrentWeather.lon) {
+    throw new Error('Failed to fetch coordinates from the weather data.')
+  }
   const { dt, lat, lon, timezone } = formattedCurrentWeather
   const formattedForecastWeather = await getWeatherData('forecast', {
     lat,

@@ -8,6 +8,7 @@ import {
 } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import '../forecast/forecast.css'
 
 // Fix for the default marker icon not showing
 import markerIconPng from 'leaflet/dist/images/marker-icon.png'
@@ -23,7 +24,6 @@ const markerIcon = new L.Icon({
   shadowSize: [41, 41],
 })
 
-// Create a map component that will take the user's location (city or geolocation)
 const MapComponent = ({
   lat = 40.7128,
   lon = -74.006,
@@ -32,22 +32,30 @@ const MapComponent = ({
 }) => {
   const [position, setPosition] = useState({ lat, lng: lon })
 
-  // Handle map click to update position
+  // Handle map click to update position and fetch weather data
   const MapEvents = () => {
     useMapEvents({
       click(e) {
-        const newPos = [e.latlng.lat, e.latlng.lng]
+        const { lat, lng } = e.latlng
+        const newPos = { lat, lng }
+
+        // Update the position state
         setPosition(newPos)
+
+        // Pass the new position back to parent (if needed)
         setLatLon(newPos)
-        fetchWeatherData(newPos[0], newPos[1])
+
+        // Fetch weather data for the clicked location
+        fetchWeatherData(lat, lng)
       },
     })
     return null
   }
 
+  // Effect to update position when lat/lon props change
   useEffect(() => {
     if (lat && lon) {
-      setPosition([lat, lon])
+      setPosition({ lat, lng: lon })
     }
   }, [lat, lon])
 
@@ -56,6 +64,7 @@ const MapComponent = ({
       center={position}
       zoom={13}
       style={{ height: '600px', width: '100%' }}
+      className='map-container'
     >
       <TileLayer
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -67,10 +76,11 @@ const MapComponent = ({
         draggable={true}
         eventHandlers={{
           dragend(e) {
-            const newPos = [e.target.getLatLng().lat, e.target.getLatLng().lng]
+            const { lat, lng } = e.target.getLatLng()
+            const newPos = { lat, lng }
             setPosition(newPos)
             setLatLon(newPos)
-            fetchWeatherData(newPos[0], newPos[1])
+            fetchWeatherData(lat, lng)
           },
         }}
       >
