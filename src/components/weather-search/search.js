@@ -9,9 +9,9 @@ import { fetchWeatherDataForCities } from '../../services/weatherServices'
 import { motion } from 'framer-motion'
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
 import { useState, useMemo } from 'react'
-import iconMapping, { defaultIcon } from '../../functions/functions'
+import iconMapping from '../../functions/functions'
 
-const Searchbar = ({ setQuery }) => {
+const Searchbar = ({ setQuery, icon }) => {
   // weather widget
   const cities = useMemo(
     () => ['Port Harcourt', 'Otuaka', 'Yenagoa', 'Brass', 'Elebele'],
@@ -29,7 +29,7 @@ const Searchbar = ({ setQuery }) => {
         console.log(data)
         setTimeout(() => {
           setIsWidgetLoading(false)
-        }, 2000)
+        }, 500)
       } catch (error) {
         setError('failed to fetch weather data')
         setIsWidgetLoading(true)
@@ -105,7 +105,7 @@ const Searchbar = ({ setQuery }) => {
                     navigate('/forecast')
                   }, 500)
                 }
-                const customIcon = iconMapping[weatherIconCode] || defaultIcon
+                const customIcon = iconMapping[weatherIconCode] || icon
                 return (
                   <motion.button
                     inherit={{ y: '-100%', opacity: 0 }}

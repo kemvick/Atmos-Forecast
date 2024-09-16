@@ -9,8 +9,8 @@ const getWeatherData = (infoType, searchParams) => {
   url.search = new URLSearchParams({ ...searchParams, appid: API_KEY })
   return fetch(url).then((res) => res.json())
 }
-const iconUrlFromCode = (icon) =>
-  `https://api.openweathermap.org/img/w/${icon}@2x.png`
+// const iconUrlFromCode = (icon) =>
+//   `https://api.openweathermap.org/img/w/${icon}@2x.png`
 // function getIconURL(icon) {
 //   getIcon(`${icon}`)
 //   return `../static/icons/${icon}.png`
@@ -51,7 +51,8 @@ const formatCurrent = (data) => {
     details,
     description,
     speed,
-    icon: iconUrlFromCode(icon),
+    // icon: iconUrlFromCode(icon),
+    icon,
     formattedLocalTime,
     visibility,
     lat,

@@ -84,6 +84,9 @@
   text-transform: capitalize;
   font-weight: 500;
 }
+.spinner-img {
+  position: fixed;
+}
 .home {
   padding: 0.9rem 1rem;
   background: var(--lineargradient2);

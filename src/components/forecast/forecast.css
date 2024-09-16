@@ -50,8 +50,8 @@
   gap: 0.2rem;
 }
 .weather-img {
-  width: 45%;
-  margin: 0.3rem auto;
+  width: 30%;
+  margin: 0.8rem auto;
 }
 .city-name {
   font-weight: 700;
@@ -76,7 +76,7 @@
   padding: 0.9rem 0.4rem;
 }
 .temp {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 .weather-stats-container {
@@ -108,7 +108,7 @@
   text-transform: none;
 }
 .daily-weekly-img {
-  width: 70%;
+  width: 60%;
   margin: auto;
 }
 .weather-map {
@@ -156,8 +156,8 @@
   background: var(--forecastLabelColor1);
   display: grid;
   gap: 0.43rem;
-  padding: 1rem 0.55rem;
-  border-radius: 2rem;
+  padding: 1.9rem 0.55rem;
+  border-radius: 2.5rem;
   border: 1px solid #42176d;
   text-transform: uppercase;
 }
@@ -238,6 +238,9 @@
 .tab-item.tab.active {
   background: red;
 }
+.p-te {
+  opacity: 75%;
+}
 /* .map-container {
   z-index: -2;
 } */
@@ -262,6 +265,9 @@ media queries
   .cond-img {
     width: 60px;
   }
+  .temp {
+    font-size: 1.6rem !important;
+  }
 }
 @media screen and (min-width: 425px) {
   .weather-stat {
@@ -274,14 +280,34 @@ media queries
     width: 95% !important;
   }
 }
+@media screen and (min-width: 768px) {
+  .weather-img {
+    width: 18%;
+  }
+  .temp {
+    font-size: 2rem !important;
+  }
+  .tab-content {
+    width: 19.5rem;
+  }
+  .per-hour p {
+    font-size: 0.8rem;
+  }
+  .daily-weekly-img {
+    width: 90%;
+  }
+}
 @media screen and (min-width: 1024px) {
   .weather-img {
-    width: 30%;
+    width: 60%;
     margin: 1.5rem 0;
   }
   .temp-and-details {
     padding: 0 5rem;
     padding-top: 2rem;
+  }
+  .temp {
+    font-size: 1.9rem !important;
   }
   .time {
     font-size: 0.98rem;
@@ -327,8 +353,8 @@ media queries
   }
   .per-hour {
     font-size: 0.8rem;
-    padding: 1.5rem 0.77rem;
-    border-radius: 2.5rem;
+    padding: 1.5rem 0.9rem;
+    border-radius: 3rem;
   }
   .tab {
     font-size: 0.84rem;
@@ -345,6 +371,6 @@ media queries
     height: 60vh;
   }
   .weather-img {
-    width: 6rem;
+    width: 36%;
   }
 }

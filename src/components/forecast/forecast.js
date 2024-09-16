@@ -14,7 +14,7 @@ import WeeklyForecast from './WeeklyForecast.js'
 import TabBar from './tabBar.js'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import iconMapping from '../../functions/functions'
+import iconMapping, { defaultIcon } from '../../functions/functions'
 import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
 import { IoLocation } from 'react-icons/io5'
 import MapComponent from '../map/map.js'
@@ -102,7 +102,10 @@ const Forecast = ({
   const [activeTab, setActiveTab] = useState(0)
   const [activeTabBar, setActiveTabBar] = useState(0)
   const [showTabBar, setShowTabBar] = useState(false)
+  console.log(icon)
+
   const customIcon = iconMapping[icon] || icon
+  // console.log(customIcon)
 
   const tabs = [
     {
@@ -112,7 +115,7 @@ const Forecast = ({
           data={data.hourly}
           units={units}
           icon={icon}
-          customIcon={customIcon}
+          // customIcon={customIcon}
         />
       ),
     },
@@ -123,7 +126,7 @@ const Forecast = ({
           data={data.daily}
           units={units}
           icon={icon}
-          customIcon={customIcon}
+          // customIcon={customIcon}
         />
       ),
     },
